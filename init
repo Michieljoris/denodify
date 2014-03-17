@@ -1,0 +1,27 @@
+#!/bin/sh
+PROJECT_NAME=`basename $PWD`
+echo $PROJECT_NAME
+cp ./.project/package.js ./
+sed -i "s/projectname/$PROJECT_NAME/g" ./package.js
+cp ./.project/bower.js ./
+sed -i "s/projectname/$PROJECT_NAME/g" ./bower.js
+cp ./.project/README.md ./
+sed -i "s/projectname/$PROJECT_NAME/g" ./README.md
+rm -rf bower_components
+rm -rf node_modules
+npm install fs-extra
+node package.js
+npm install
+node bower.js
+bower install
+rm -rf .git
+chmod uga-x ./init
+echo "//Empty source file" > src/$PROJECT_NAME.js
+bin/docs
+
+git init
+git add -A
+git commit -m 'first commit'
+git remote add origin "git@github.com:Michieljoris/$PROJECT_NAME"
+echo "Installed bower and npm packages and made your first commit!"
+
