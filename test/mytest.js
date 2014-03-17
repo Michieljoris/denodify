@@ -1,5 +1,13 @@
 var denodify = require('../src/denodify');
-console.log(denodify);
+
+// denodify.debug = true;
+denodify.tags('./', './', './m3', function(err, tags) {
+    console.log();
+    console.log(tags);
+});
+
+var wrapped = denodify.wrap('mymodule', '\n\n[some nodejs module code]');
+console.log(wrapped);
 
 // var qdn=qdn||{require:function(module) {return qdn.m[module].exports;},m:{}};
 // //=============module t1===============

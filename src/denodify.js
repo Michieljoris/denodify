@@ -6,8 +6,8 @@ var path = [];
 var index = 0;
 
 var script = "var qdn=qdn||{require:function(module) {return qdn.m[module].exports;},m:{}};";
-var prefix = "(function(require, module, exports) {" ;
-var postfix = "})(qdn.require, qdn.m['./t1']={exports:{}}, qdn.m['./t1'].exports);";
+var prefix = "(function(require, module, exports) {\n" ;
+var postfix = "\n\n})(qdn.require, qdn.m['./module']={exports:{}}, qdn.m['./module'].exports);";
 
 //Utility functions to enable use of nodejs modules in the browser. Used in
 //[html-builder](http://github.com/Michieljoris/html-builder) and
@@ -22,9 +22,9 @@ var postfix = "})(qdn.require, qdn.m['./t1']={exports:{}}, qdn.m['./t1'].exports
 //If you leave 2 lines open at the top of every module wrap will replace the top
 //line with the prefix wrapping code. This way line numbers in your modules will
 //match the line numbers of the javascript file loaded in the browser
-exports.wrap = function(string, language) {
+exports.wrap = function(module, string, language) {
     if (string[0] === '\n') string = string.slice(1);
-    return prefix + string + postfix;
+    return prefix + string + postfix.replace(/module/g, module);
 };
 
 //###script
@@ -48,7 +48,7 @@ exports.script =  script;
 //* `module` : the id of the file if you were requiring it (without the js)
 //* `callback` : called as `callback(err, list)`. 
 // Return a list of script tags to add to a html file. 
-exports.tags = function list(www, parent, module, callback, listOnly) {
+exports.tags = function(www, parent, module, callback, listOnly) {
     list(www, parent, module, callback, false);
 }; 
 
@@ -56,11 +56,11 @@ exports.tags = function list(www, parent, module, callback, listOnly) {
 
 //Same as tags, however returns only the properly ordered list of module ids and
 //corresponding file names.
-exports.list = function list(www, parent, module, callback, listOnly) {
+exports.list = function(www, parent, module, callback, listOnly) {
     list(www, parent, module, callback, true);
 }; 
 
-
+exports.debug = false;
 
 function walk(module) {
   modules[module.id] = module;
@@ -84,27 +84,25 @@ function list(www, parent, id, cb, listOnly) {
     try 
     {  www = Path.resolve(www);
        parent = Path.resolve(www, parent);
-       console.log('Resolving: ' + id + ' in directory ' + parent);
+       debug('Resolving: ' + id + ' in directory ' + parent);
        var fileName = Path.resolve(parent, id + '.js');
-       console.log(fileName);
        required(fileName, {
            includeSource: false
        }, function(err, deps) {
-           if (err) console.log(err);
+           if (err) throw err;
            else { 
                walk({
 	           id: './t3',
 	           filename: fileName, 
 	           deps: deps,
 	           index: -1
-          
                });
                var list = Object.keys(modules).map(function(m) {
                    m = modules[m];
 	           var startWithWwwPath = m.filename.indexOf(www) === 0;
 	           if (!startWithWwwPath)
                        throw 'Warning: ' + m.id  + ' was found outside the www directory (' + www + ')';
-                   m.route = m.fileName.slice(www.length); 
+                   m.route = m.filename.slice(www.length); 
 	           return m;
                }).sort(function(a, b) {
 	           return a.index > b.index;
@@ -113,14 +111,17 @@ function list(www, parent, id, cb, listOnly) {
                        { id: m.id, filename: m.filename } :
                    "<script type=\"text/javascript\" src=\"" + m.route + "\"></script>";
                });
+               debug('Debug:\n', list);
                cb(null, list); 
-
-               console.log('Debug:\n', list);
            }
        });
     } catch(e) {
         cb(e, null);
     }
 };
+
+function debug() {
+    if (exports.debug) console.log.apply(console, arguments);
+}
 
 
