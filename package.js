@@ -30,17 +30,17 @@ module.exports = {
     // We know it is JavaScript for Node.
     "name": "denodify",
     // A single line, or sometimes slightly longer, description of our package.
-    "description": "Clone this project to scaffold a new (npm/node) project.",
+    "description": "Use nodejs modules in the browser. Used with bb-server and html-builder",
     // [npm](http://npmjs.org) enforces the X.Y.Z semantic version 
     // scheme that is described at [http://semver.org/](http://semver.org/)
     // and we should follow this versioning for our package.
-    "version": "0.1.0",
+    // "version": "0.1.0",
     // URL to the homepage for this package.
     "homepage": "https://github.com/michieljoris/denodify",
     // An array of keywords used to describe this package to search engines,
     // mainly for people searching within the npm universe.
     "keywords": [
-        
+        "denodify", "dependency", "detective", "require", "module", "resolver"
     ],
     // Where is the source of truth for this code, and what type of repo is it?
     "repository": {
@@ -146,7 +146,6 @@ var fs = require("fs-extra");
 var packagejs = require("./package.js");
 var v = '0.1.0';
 if (!packagejs.version) {
-    
     try {
         v = require('./package.json').version;
     } catch(e) {
@@ -156,6 +155,7 @@ if (!packagejs.version) {
     v = [s[0],s[1],parseInt(s[2]) + 1].join('.');
     packagejs.version = v;
 }
+console.log(packagejs.version);
 
 console.log("Writing the package.json file out from package.js...");
 fs.writeJSONFile("package.json", packagejs, function(err){

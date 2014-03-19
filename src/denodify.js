@@ -1,13 +1,18 @@
 var Path = require('path');
 var required = require('required');
 
-var modules = [];
 var path = [];
 var index = 0;
+var modules;
 
 var script = "var qdn=qdn||{require:function(module) {return qdn.m[module].exports;},m:{}};";
-var prefix = "(function(require, module, exports) {\n" ;
-var postfix = "\n\n})(qdn.require, qdn.m['./module']={exports:{}}, qdn.m['./module'].exports);";
+
+var languages = {
+    javascript : {
+        prefix : "(function(require, module, exports) {\n",
+        postfix : "\n\n})(qdn.require, qdn.m['./module']={exports:{}}, qdn.m['./module'].exports);"
+    }   
+};
 
 //Utility functions to enable use of nodejs modules in the browser. Used in
 //[html-builder](http://github.com/Michieljoris/html-builder) and
@@ -23,8 +28,9 @@ var postfix = "\n\n})(qdn.require, qdn.m['./module']={exports:{}}, qdn.m['./modu
 //line with the prefix wrapping code. This way line numbers in your modules will
 //match the line numbers of the javascript file loaded in the browser
 exports.wrap = function(module, string, language) {
+    language = language || 'javascript';
     if (string[0] === '\n') string = string.slice(1);
-    return prefix + string + postfix.replace(/module/g, module);
+    return languages[language].prefix + string + languages[language].postfix.replace(/module/g, module);
 };
 
 //###script
@@ -91,8 +97,10 @@ function list(www, parent, id, cb, listOnly) {
        }, function(err, deps) {
            if (err) throw err;
            else { 
+               
+               modules = [];
                walk({
-	           id: './t3',
+	           id: id,
 	           filename: fileName, 
 	           deps: deps,
 	           index: -1
@@ -125,3 +133,8 @@ function debug() {
 }
 
 
+
+// list('../', './test', './m3', function(err, tags) {
+//     console.log();
+//     console.log(tags);
+// }, true);

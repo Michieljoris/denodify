@@ -1,0 +1,142 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/michieljoris/bin/node',
+1 verbose cli   '/home/michieljoris/bin/npm',
+1 verbose cli   'link',
+1 verbose cli   'denodify.org',
+1 verbose cli   'o' ]
+2 info using npm@1.3.21
+3 info using node@v0.10.24
+4 verbose node symlink /home/michieljoris/bin/node
+5 verbose install where,what [ '/home/michieljoris/lib', [ 'denodify.org' ] ]
+6 verbose install where,what [ '/home/michieljoris/lib', [ 'o' ] ]
+7 warn package.json log.io@0.3.3 No repository field.
+8 warn package.json couchapp@0.10.1 No repository field.
+9 verbose cache add [ 'o', null ]
+10 verbose cache add name=undefined spec="o" args=["o",null]
+11 verbose parsed url { protocol: null,
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: null,
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: null,
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: 'o',
+11 verbose parsed url   path: 'o',
+11 verbose parsed url   href: 'o' }
+12 verbose cache add [ 'denodify.org', null ]
+13 verbose cache add name=undefined spec="denodify.org" args=["denodify.org",null]
+14 verbose parsed url { protocol: null,
+14 verbose parsed url   slashes: null,
+14 verbose parsed url   auth: null,
+14 verbose parsed url   host: null,
+14 verbose parsed url   port: null,
+14 verbose parsed url   hostname: null,
+14 verbose parsed url   hash: null,
+14 verbose parsed url   search: null,
+14 verbose parsed url   query: null,
+14 verbose parsed url   pathname: 'denodify.org',
+14 verbose parsed url   path: 'denodify.org',
+14 verbose parsed url   href: 'denodify.org' }
+15 silly lockFile 7a81af3e-o o
+16 verbose lock o /home/michieljoris/.npm/7a81af3e-o.lock
+17 silly lockFile 0592c456-denodify-org denodify.org
+18 verbose lock denodify.org /home/michieljoris/.npm/0592c456-denodify-org.lock
+19 silly lockFile 7a81af3e-o o
+20 silly lockFile 7a81af3e-o o
+21 verbose addNamed [ 'o', '' ]
+22 verbose addNamed [ null, '*' ]
+23 silly lockFile ad81a59a-o o@
+24 verbose lock o@ /home/michieljoris/.npm/ad81a59a-o.lock
+25 silly addNameRange { name: 'o', range: '*', hasData: false }
+26 verbose url raw o
+27 verbose url resolving [ 'https://registry.npmjs.org/', './o' ]
+28 verbose url resolved https://registry.npmjs.org/o
+29 info trying registry request attempt 1 at 16:58:33
+30 http GET https://registry.npmjs.org/o
+31 verbose chmod /home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/tmp.tgz 644
+32 verbose tar unpack /home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/tmp.tgz
+33 silly lockFile 4cc199e6-13974-0-7317485604435205-package tar:///home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/package
+34 verbose lock tar:///home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/package /home/michieljoris/.npm/4cc199e6-13974-0-7317485604435205-package.lock
+35 silly lockFile 1b24d85b-13974-0-7317485604435205-tmp-tgz tar:///home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/tmp.tgz
+36 verbose lock tar:///home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/tmp.tgz /home/michieljoris/.npm/1b24d85b-13974-0-7317485604435205-tmp-tgz.lock
+37 silly gunzTarPerm modes [ '755', '644' ]
+38 error not a package /home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/tmp.tgz
+39 silly lockFile 4cc199e6-13974-0-7317485604435205-package tar:///home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/package
+40 silly lockFile 4cc199e6-13974-0-7317485604435205-package tar:///home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/package
+41 silly lockFile 1b24d85b-13974-0-7317485604435205-tmp-tgz tar:///home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/tmp.tgz
+42 silly lockFile 1b24d85b-13974-0-7317485604435205-tmp-tgz tar:///home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125913974-0.7317485604435205/tmp.tgz
+43 silly lockFile 0592c456-denodify-org denodify.org
+44 silly lockFile 0592c456-denodify-org denodify.org
+45 verbose addNamed [ 'denodify.org', '' ]
+46 verbose addNamed [ null, '*' ]
+47 silly lockFile 4023fa59-denodify-org denodify.org@
+48 verbose lock denodify.org@ /home/michieljoris/.npm/4023fa59-denodify-org.lock
+49 silly addNameRange { name: 'denodify.org', range: '*', hasData: false }
+50 verbose url raw denodify.org
+51 verbose url resolving [ 'https://registry.npmjs.org/', './denodify.org' ]
+52 verbose url resolved https://registry.npmjs.org/denodify.org
+53 info trying registry request attempt 1 at 16:58:34
+54 http GET https://registry.npmjs.org/denodify.org
+55 http 200 https://registry.npmjs.org/o
+56 silly registry.get cb [ 200,
+56 silly registry.get   { date: 'Tue, 18 Mar 2014 06:58:34 GMT',
+56 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+56 silly registry.get     etag: '"4Q8T82DZ3MHQT7LHCFDZIKB5P"',
+56 silly registry.get     'content-type': 'application/json',
+56 silly registry.get     via: '1.1 varnish',
+56 silly registry.get     'cache-control': 'max-age=1',
+56 silly registry.get     'content-length': '6122',
+56 silly registry.get     'accept-ranges': 'bytes',
+56 silly registry.get     age: '0',
+56 silly registry.get     'x-served-by': 'cache-v37-ASH, cache-syd1622-SYD',
+56 silly registry.get     'x-cache': 'MISS, MISS',
+56 silly registry.get     'x-cache-hits': '0, 0',
+56 silly registry.get     'x-timer': 'S1395125914.365004063,VS0,VS596,VE709,VE341',
+56 silly registry.get     vary: 'Accept',
+56 silly registry.get     'keep-alive': 'timeout=10, max=50',
+56 silly registry.get     connection: 'Keep-Alive' } ]
+57 silly addNameRange number 2 { name: 'o', range: '*', hasData: true }
+58 silly addNameRange versions [ 'o', [ '0.0.6', '0.0.7', '0.0.8', '0.0.9', '0.0.10' ] ]
+59 verbose addNamed [ 'o', '0.0.10' ]
+60 verbose addNamed [ '0.0.10', '0.0.10' ]
+61 silly lockFile 861e263a-o-0-0-10 o@0.0.10
+62 verbose lock o@0.0.10 /home/michieljoris/.npm/861e263a-o-0-0-10.lock
+63 silly lockFile 029d80c0-egistry-npmjs-org-o-o-0-0-10-tgz https://registry.npmjs.org/o/-/o-0.0.10.tgz
+64 verbose lock https://registry.npmjs.org/o/-/o-0.0.10.tgz /home/michieljoris/.npm/029d80c0-egistry-npmjs-org-o-o-0-0-10-tgz.lock
+65 verbose addRemoteTarball [ 'https://registry.npmjs.org/o/-/o-0.0.10.tgz',
+65 verbose addRemoteTarball   '6dd78a9d33e1b9d8627f5aca851921735700c126' ]
+66 info retry fetch attempt 1 at 16:58:34
+67 verbose fetch to= /home/michieljoris/tmp/npm-2506-Em_-R9Ud/1395125914801-0.8183616583701223/tmp.tgz
+68 http GET https://registry.npmjs.org/o/-/o-0.0.10.tgz
+69 http 404 https://registry.npmjs.org/denodify.org
+70 silly registry.get cb [ 404,
+70 silly registry.get   { date: 'Tue, 18 Mar 2014 06:58:34 GMT',
+70 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+70 silly registry.get     'content-type': 'application/json',
+70 silly registry.get     via: '1.1 varnish',
+70 silly registry.get     'cache-control': 'max-age=0',
+70 silly registry.get     'content-length': '52',
+70 silly registry.get     'accept-ranges': 'bytes',
+70 silly registry.get     age: '0',
+70 silly registry.get     'x-served-by': 'cache-v42-ASH, cache-syd1620-SYD',
+70 silly registry.get     'x-cache': 'MISS, MISS',
+70 silly registry.get     'x-cache-hits': '0, 0',
+70 silly registry.get     'x-timer': 'S1395125914.483643770,VS0,VS-807,VE-698,VE337',
+70 silly registry.get     'keep-alive': 'timeout=10, max=50',
+70 silly registry.get     connection: 'Keep-Alive' } ]
+71 silly lockFile 4023fa59-denodify-org denodify.org@
+72 silly lockFile 4023fa59-denodify-org denodify.org@
+73 error 404 'denodify.org' is not in the npm registry.
+73 error 404 You should bug the author to publish it
+73 error 404
+73 error 404 Note that you can also install from a
+73 error 404 tarball, folder, or http url, or git url.
+74 error System Linux 3.12.8-1-ARCH
+75 error command "/home/michieljoris/bin/node" "/home/michieljoris/bin/npm" "link" "denodify.org" "o"
+76 error cwd /mnt/mint/home/michieljoris/mysrc/javascript/denodify
+77 error node -v v0.10.24
+78 error npm -v 1.3.21
+79 error code E404
+80 verbose exit [ 1, true ]

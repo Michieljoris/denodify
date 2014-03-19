@@ -1,2 +1,42 @@
 * write tests
-*
+  
+* denodify non-js files
+if a file has a non-js extension, recast it, and find the requires and continue
+for speed use cache, which is deputy, use fs.stat not mdhash to decide on
+whether to (if necessary) recast and parse for requires. So modify deputy. This
+is for use in html-builder
+
+* nodejs modules and globals to import:
+ https://github.com/substack/node-browserify 
+When you require() any of these modules, you will get a browser-specific shim:
+
+assert
+buffer
+console
+constants
+crypto
+domain
+events
+http
+https
+os
+path
+punycode
+querystring
+stream
+string_decoder
+timers
+tty
+url
+util
+vm
+zlib
+
+Additionally if you use any of these variables, they will be defined in the
+bundled output in a browser-appropriate way:
+
+process
+Buffer
+global - top-level scope object (window)
+__filename - file path of the currently executing file
+__dirname - directory path of the currently executing file

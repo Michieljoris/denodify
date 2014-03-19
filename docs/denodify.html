@@ -38,8 +38,13 @@
 <span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>;
 
 <span class="hljs-keyword">var</span> script = <span class="hljs-string">"var qdn=qdn||{require:function(module) {return qdn.m[module].exports;},m:{}};"</span>;
-<span class="hljs-keyword">var</span> prefix = <span class="hljs-string">"(function(require, module, exports) {"</span> ;
-<span class="hljs-keyword">var</span> postfix = <span class="hljs-string">"})(qdn.require, qdn.m['./t1']={exports:{}}, qdn.m['./t1'].exports);"</span>;</pre></div></div>
+
+<span class="hljs-keyword">var</span> languages = {
+    javascript : {
+        prefix : <span class="hljs-string">"(function(require, module, exports) {\n"</span>,
+        postfix : <span class="hljs-string">"\n\n})(qdn.require, qdn.m['./module']={exports:{}}, qdn.m['./module'].exports);"</span>
+    }   
+};</pre></div></div>
             
         </li>
         
@@ -99,9 +104,10 @@ match the line numbers of the javascript file loaded in the browser</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports.wrap = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(string, language)</span> {</span>
+            <div class="content"><div class='highlight'><pre>exports.wrap = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(module, string, language)</span> {</span>
+    language = language || <span class="hljs-string">'javascript'</span>;
     <span class="hljs-keyword">if</span> (string[<span class="hljs-number">0</span>] === <span class="hljs-string">'\n'</span>) string = string.slice(<span class="hljs-number">1</span>);
-    <span class="hljs-keyword">return</span> prefix + string + postfix;
+    <span class="hljs-keyword">return</span> languages[language].prefix + string + languages[language].postfix.replace(<span class="hljs-regexp">/module/g</span>, module);
 };</pre></div></div>
             
         </li>
@@ -195,7 +201,7 @@ Return a list of script tags to add to a html file. </li>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports.list = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">list</span><span class="hljs-params">(www, parent, module, callback, listOnly)</span> {</span>
+            <div class="content"><div class='highlight'><pre>exports.tags = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(www, parent, module, callback, listOnly)</span> {</span>
     list(www, parent, module, callback, <span class="hljs-literal">false</span>);
 };</pre></div></div>
             
@@ -226,11 +232,11 @@ corresponding file names.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports.list = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">list</span><span class="hljs-params">(www, parent, module, callback, listOnly)</span> {</span>
+            <div class="content"><div class='highlight'><pre>exports.list = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(www, parent, module, callback, listOnly)</span> {</span>
     list(www, parent, module, callback, <span class="hljs-literal">true</span>);
 }; 
 
-
+exports.debug = <span class="hljs-literal">false</span>;
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">walk</span><span class="hljs-params">(module)</span> {</span>
   modules[module.id] = module;
@@ -254,27 +260,25 @@ corresponding file names.</p>
     <span class="hljs-keyword">try</span> 
     {  www = Path.resolve(www);
        parent = Path.resolve(www, parent);
-       console.log(<span class="hljs-string">'Resolving: '</span> + id + <span class="hljs-string">' in directory '</span> + parent);
+       debug(<span class="hljs-string">'Resolving: '</span> + id + <span class="hljs-string">' in directory '</span> + parent);
        <span class="hljs-keyword">var</span> fileName = Path.resolve(parent, id + <span class="hljs-string">'.js'</span>);
-       console.log(fileName);
        required(fileName, {
            includeSource: <span class="hljs-literal">false</span>
        }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, deps)</span> {</span>
-           <span class="hljs-keyword">if</span> (err) console.log(err);
+           <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
            <span class="hljs-keyword">else</span> { 
                walk({
 	           id: <span class="hljs-string">'./t3'</span>,
 	           filename: fileName, 
 	           deps: deps,
 	           index: -<span class="hljs-number">1</span>
-          
                });
                <span class="hljs-keyword">var</span> list = <span class="hljs-built_in">Object</span>.keys(modules).map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(m)</span> {</span>
                    m = modules[m];
 	           <span class="hljs-keyword">var</span> startWithWwwPath = m.filename.indexOf(www) === <span class="hljs-number">0</span>;
 	           <span class="hljs-keyword">if</span> (!startWithWwwPath)
                        <span class="hljs-keyword">throw</span> <span class="hljs-string">'Warning: '</span> + m.id  + <span class="hljs-string">' was found outside the www directory ('</span> + www + <span class="hljs-string">')'</span>;
-                   m.route = m.fileName.slice(www.length); 
+                   m.route = m.filename.slice(www.length); 
 	           <span class="hljs-keyword">return</span> m;
                }).sort(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> {</span>
 	           <span class="hljs-keyword">return</span> a.index &gt; b.index;
@@ -283,15 +287,18 @@ corresponding file names.</p>
                        { id: m.id, filename: m.filename } :
                    <span class="hljs-string">"&lt;script type=\"text/javascript\" src=\""</span> + m.route + <span class="hljs-string">"\"&gt;&lt;/script&gt;"</span>;
                });
+               debug(<span class="hljs-string">'Debug:\n'</span>, list);
                cb(<span class="hljs-literal">null</span>, list); 
-
-               console.log(<span class="hljs-string">'Debug:\n'</span>, list);
            }
        });
     } <span class="hljs-keyword">catch</span>(e) {
         cb(e, <span class="hljs-literal">null</span>);
     }
-};</pre></div></div>
+};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">debug</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-keyword">if</span> (exports.debug) console.log.apply(console, <span class="hljs-built_in">arguments</span>);
+}</pre></div></div>
             
         </li>
         
