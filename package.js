@@ -68,7 +68,7 @@ module.exports = {
     // If there is a file that should be loaded when require()ing this 
     // folder-as-a-package, declare this file here, relative to our package 
     // structure.
-    "main": "src/denodify.js",
+    "main": "src/denodify-helper",
     // Essentially, which Node.js platforms do we support? These are glob
     // like expressions supported by the 
     // [npm semantic version parser](https://npmjs.org/doc/semver.html), 
@@ -91,14 +91,13 @@ module.exports = {
         // "bb-server": "0.4.x",
         // "html-builder": "0.1.x",
         "fs-extra": "0.8.x",
-        
          required: "0.4.0",
         "deputy": "0.0.4"
 	// "nodemailer": "*",
 	// "dbox": "*",
         // "nodemailer": "0.5.x",
         // "dbox": "0.6.x",
-        // "colors": "*",
+        ,"colors": "*"
     },
     // What dependencies are useful only for developers?
     // Installed when we `npm install` in our working directory, but not 

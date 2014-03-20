@@ -33,7 +33,7 @@ exports.wrap = function(moduleid, string) {
 //###script
 
 //Script to load in your html file before all denodified scripts.
-exports.script = fs.readFileSync('./denodify.js');
+exports.script = fs.readFileSync(__dirname + '/denodify.js');
 
 //###tags
 
