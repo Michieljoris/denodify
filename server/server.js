@@ -8,10 +8,6 @@ var server = require('bb-server')
 ;
 
  
-//TODO: limit sending of files to certain mimetypes and/or extensions
-//TODO: option to not send mimeless files found in allowable directories.
-//TODO: send certain files directly, bypassing cache with certain
-//cache control headings, so we can send big files etc
 var develop_mode = process.env.DEVELOP; 
 var options = { 
     //Serve all files relative to this root. Defaults to './'.
@@ -105,6 +101,7 @@ var options = {
             // ,'jade', 'less', 'stylus', 'sweetjs',
             // 'typescript'
             // ,'markdown'
+            ,'denodify'
         ]
         // ,transpile: []  //TODO add all current supported file types
        // ,minify: []
@@ -168,7 +165,7 @@ var options = {
     //start a https server
     ,https: false
     //start a websocket server
-    ,wsServer: false
+    ,websocket: true
     //attaches session data to requests
     // ,sessions: {
     //     expires: 30

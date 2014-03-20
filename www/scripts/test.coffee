@@ -1,1 +1,1 @@
-alert "CoffeeScript running in the browser. Magic!!!"
+console.log "CoffeeScript running in the browser. Magic!!!"

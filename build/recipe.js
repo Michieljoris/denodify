@@ -26,7 +26,7 @@ var exports = {
         ,partials: 'build/'  //can be overridden per template
         ,www: 'www'
         ,out:'built' 
-        ,js: 'js'
+        ,js: 'scripts'
     }
     /*
       If cachify if falsy resources will be requested as is, without a
@@ -177,7 +177,7 @@ var exports = {
                     
                     // ,'router'
                     // ,'angular.js'
-                    ,'test.coffee'
+                    'test.coffee'
                     //this will be substitud with the list of required modules,
                     //in the proper order, also the module enabler script will
                     //be added before the first module in every block. When this
@@ -198,7 +198,9 @@ var exports = {
                     //html-builder knows to add the required script tags here,
                     //and bb-server needs to know a requested script is a module
                     //because it needs to denodify.wrap it.
-                    ,'modules/mymodule.js'
+                    // ,'modules/mymodule.nm.js'
+                    
+                    ,['modules/mymodule.js']
                     
                 ],
                 path: 'scripts/'
@@ -224,7 +226,7 @@ var exports = {
             //       doc: 'markdown/doc.md'
             //   }
             // }
-            // ,{ src: 'views/template.html' 
+            // { src: 'views/template.html' 
             //   ,tagIdPostfix: '--' //can be overridden per template
             //   ,out: 'guideTemplate.html'
             //   ,mapping: {
@@ -237,7 +239,8 @@ var exports = {
                ,src: 'html/body.html' 
                ,tagIdPostfix: '--' //can be overridden per template
                ,mapping: {
-                   hello_world: "hello_world"
+                   hello_world: "hello_world",
+                   chat: "html/chat.html"
                }
              }
             ,{  

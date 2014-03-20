@@ -1,5 +1,6 @@
 var Path = require('path');
 var required = require('required');
+var fs = require('fs-extra');
 
 var path = [];
 var index = 0;
@@ -9,8 +10,8 @@ var script = "var qdn=qdn||{require:function(module) {return qdn.m[module].expor
 
 var languages = {
     javascript : {
-        prefix : "(function(require, module, exports) {\n",
-        postfix : "\n\n})(qdn.require, qdn.m['./module']={exports:{}}, qdn.m['./module'].exports);"
+        prefix : "(function(require, module, exports, __filename, __dirname, process) {\n",
+        postfix : "\n\n})(function(id){return qdn.require(id,'module')},qdn.m['module']={exports:{}}, qdn.m['module'].exports, 'module', '__dirname', qdn.process);"
     }   
 };
 
@@ -30,7 +31,9 @@ var languages = {
 exports.wrap = function(module, string, language) {
     language = language || 'javascript';
     if (string[0] === '\n') string = string.slice(1);
-    return languages[language].prefix + string + languages[language].postfix.replace(/module/g, module);
+    var postfix = languages[language].postfix.replace(/module/g, module);
+    postfix = postfix.replace(/__dirname/, Path.dirname(module));
+    return languages[language].prefix + string + postfix;
 };
 
 //###script
@@ -86,12 +89,25 @@ function walk(module) {
   path.pop();
 }
 
+function endsWith(str, trail) {
+    return (str.substr(str.length-trail.length, str.length-1) === trail);
+};
+  
+function trailWith(str, trail) {
+    return str ? (str + (!endsWith(str, trail) ? trail : '')) : undefined;
+};
+
 function list(www, parent, id, cb, listOnly) {
     try 
     {  www = Path.resolve(www);
        parent = Path.resolve(www, parent);
        debug('Resolving: ' + id + ' in directory ' + parent);
-       var fileName = Path.resolve(parent, id + '.js');
+       var fileName = Path.resolve(parent, trailWith(id, '.js'));
+       try {
+       fs.statSync(fileName);
+       } catch(e) { cb(e,null);
+                    return;}
+       
        required(fileName, {
            includeSource: false
        }, function(err, deps) {
@@ -111,12 +127,13 @@ function list(www, parent, id, cb, listOnly) {
 	           if (!startWithWwwPath)
                        throw 'Warning: ' + m.id  + ' was found outside the www directory (' + www + ')';
                    m.route = m.filename.slice(www.length); 
+                   debug('module:',m);
 	           return m;
                }).sort(function(a, b) {
 	           return a.index > b.index;
                }).map(function(m) {
                    return listOnly ?
-                       { id: m.id, filename: m.filename } :
+                       { id: m.id, route: m.route, filename: m.filename } :
                    "<script type=\"text/javascript\" src=\"" + m.route + "\"></script>";
                });
                debug('Debug:\n', list);
