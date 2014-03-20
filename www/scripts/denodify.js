@@ -1,1 +1,1 @@
-var qdn=qdn||{require:function(id,by) {return qdn.m[module].exports;},m:{}};
+../../src/denodify.js

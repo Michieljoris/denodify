@@ -220,7 +220,8 @@
         platform: 'browser'
     };
     
-    
+    //###API
+    //
     function require(parent, moduleid) {
         if (moduleid.indexOf('/') === -1) parent = '';
         else {
@@ -243,24 +244,25 @@
         return module.exports;
     }
 
-    //register
+    //###denodify
+    //Use this to denodify javascript. Wrap your source code with
+    //    denodify('moduleid',function(require, module, exports, __filename, __dirname, process) {
+    //       [your source code]
+    //    });
     global.denodify = function (__filename, func) { 
         f[__filename] = func;
     };
     
-    //execute
+    //###require
+    //Use this function to pull in or kickstart any defined nodejs modules from
+    //outside nodejs modules. 
     global.denodify.require = function(__filename) {
         require('', __filename);
     };
-    
+
+    //###debug
     global.denodify.debug = function(__filename) {
         console.log('modules\n:', m);
         console.log('funcs\n:', f);
     };
 })(this);
-
-(this);
-
-
-// console.log(this.qdn.require('./r1', 'modules/../testmodule.js'));
-        

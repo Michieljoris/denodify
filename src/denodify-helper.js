@@ -1,15 +1,10 @@
 var Path = require('path');
 var required = require('required');
 var fs = require('fs-extra');
-
+require('colors');
 var path = [];
 var index = 0;
 var modules;
-
-// var script = "var qdn=qdn||{require:function(module) {return qdn.m[module].exports;},m:{}};";
-
-// var prefix = "(function(require, module, exports, __filename, __dirname, process) {\n";
-// var postfix = "\n\n})(function(id){return qdn.require(id,'module')},qdn.m['module']={exports:{}}, qdn.m['module'].exports, 'module', '__dirname', qdn.process);";
 
 var prefix = "denodify('replace',function(require, module, exports, __filename, __dirname, process) {";
 var postfix = "});";
@@ -78,10 +73,11 @@ function walk(module) {
     d = modules[d.id] || d;
     if (d.index === undefined) walk(d); 
     else if (d.index < 0) {
-      throw "Module " + module.id + " is dependent on module " + d.id +
+      var str = "Module " + module.id + " is dependent on module " + d.id +
 	'. However, module ' + d.id + ' is also directly or indirectly dependent on module ' +
 	module.id + ".\nDependency path to this point: \n" + path.join(' relies on \n') +
 	' relies on ' + d.id;
+        console.log(str.red);
     }
   });
   module.index = index++;
