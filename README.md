@@ -1,7 +1,8 @@
 denodify
 --------
 
-Utility functions that enable use of nodejs modules in the browser.
+Organize javascript on the browser using the nodejs module system.
+
 
 Much simpler version than browserify, modules don't get bundled for instance,
 nor is there any plugin system browserifying all and sundry. Instead

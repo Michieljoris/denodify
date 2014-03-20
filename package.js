@@ -90,8 +90,6 @@ module.exports = {
     "dependencies": {
         // "bb-server": "0.4.x",
         // "html-builder": "0.1.x",
-        "bb-server": "git://github.com/michieljoris/bb-server.git",
-        "html-builder": "git://github.com/michieljoris/html-builder.git",
         "fs-extra": "0.8.x",
         
          required: "0.4.0",
@@ -114,6 +112,8 @@ module.exports = {
     // * **doccoh**: Documentation utility for this code.
     "devDependencies": {
         // "doccoh": "*"
+        "bb-server": "git://github.com/michieljoris/bb-server.git",
+        "html-builder": "git://github.com/michieljoris/html-builder.git",
         "docco": "*"
     },
     // Should this package be prevented from accidental publishing by npm?

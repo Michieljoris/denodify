@@ -1,157 +1,266 @@
-var Path = require('path');
-var required = require('required');
-var fs = require('fs-extra');
+(function(global) {
+    
+    if (global.denodify) return;
+    
+    var m = {};
+    var f = {};
+    
+    //copied from path-browserify
+    var path = (function() {
+        var exports  = {};
+        function normalizeArray(parts, allowAboveRoot) {
+            // if the path tries to go above the root, `up` ends up > 0
+            var up = 0;
+            for (var i = parts.length - 1; i >= 0; i--) {
+                var last = parts[i];
+                if (last === '.') {
+                    parts.splice(i, 1);
+                } else if (last === '..') {
+                    parts.splice(i, 1);
+                    up++;
+                } else if (up) {
+                    parts.splice(i, 1);
+                    up--;
+                }
+            }
 
-var path = [];
-var index = 0;
-var modules;
+            // if the path is allowed to go above the root, restore leading ..s
+            if (allowAboveRoot) {
+                for (; up--; up) {
+                    parts.unshift('..');
+                }
+            }
 
-var script = "var qdn=qdn||{require:function(module) {return qdn.m[module].exports;},m:{}};";
+            return parts;
+        }
 
-var languages = {
-    javascript : {
-        prefix : "(function(require, module, exports, __filename, __dirname, process) {\n",
-        postfix : "\n\n})(function(id){return qdn.require(id,'module')},qdn.m['module']={exports:{}}, qdn.m['module'].exports, 'module', '__dirname', qdn.process);"
-    }   
-};
+        // Split a filename into [root, dir, basename, ext], unix version
+        // 'root' is just a slash, or nothing.
+        var splitPathRe =
+            /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+        var splitPath = function(filename) {
+            return splitPathRe.exec(filename).slice(1);
+        };
 
-//Utility functions to enable use of nodejs modules in the browser. Used in
-//[html-builder](http://github.com/Michieljoris/html-builder) and
-//[bb-server](http://github.com/Michieljoris/bb-server).
+        // path.resolve([from ...], to)
+        // posix version
+        exports.resolve = function() {
+            var resolvedPath = '',
+            resolvedAbsolute = false;
 
-//###wrap
+            for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+                var path = (i >= 0) ? arguments[i] : process.cwd();
 
-//Wrap a `string` of a nodejs module with the proper code to enable its use in
-//the browser. Specify the `language` your nodejs module is written in to match
-//the added code to the code of the module. Defaults to javascript.
+                    // Skip empty and invalid entries
+                if (typeof path !== 'string') {
+                    throw new TypeError('Arguments to path.resolve must be strings');
+                } else if (!path) {
+                    continue;
+                }
 
-//If you leave 2 lines open at the top of every module wrap will replace the top
-//line with the prefix wrapping code. This way line numbers in your modules will
-//match the line numbers of the javascript file loaded in the browser
-exports.wrap = function(module, string, language) {
-    language = language || 'javascript';
-    if (string[0] === '\n') string = string.slice(1);
-    var postfix = languages[language].postfix.replace(/module/g, module);
-    postfix = postfix.replace(/__dirname/, Path.dirname(module));
-    return languages[language].prefix + string + postfix;
-};
+                resolvedPath = path + '/' + resolvedPath;
+                resolvedAbsolute = path.charAt(0) === '/';
+            }
 
-//###script
+            // At this point the path should be resolved to a full absolute path, but
+            // handle relative paths to be safe (might happen when process.cwd() fails)
 
-//Script to load in your html file before all denodified scripts.
-exports.script =  script;
+            // Normalize the path
+            resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+                return !!p;
+            }), !resolvedAbsolute).join('/');
 
-//###tags
+            return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+        };
 
-//Given a main `module`, parses it for require calls, loads the corresponding
-//module files and recursively parses them. Once all dependencies are found
-//calls the `callback` with a list of tags that if loaded in the browser in the
-//listed order all dependencies would be fullfilled for each module.
+        // path.normalize(path)
+        // posix version
+        exports.normalize = function(path) {
+            var isAbsolute = exports.isAbsolute(path),
+            trailingSlash = substr(path, -1) === '/';
 
-//Callback is called with an error if a circular dependency is found or a
-//dependency is found that is not in the `www` directory, or if any other error
-//occurs.
+            // Normalize the path
+            path = normalizeArray(filter(path.split('/'), function(p) {
+                return !!p;
+                }), !isAbsolute).join('/');
 
-//* `www` : the directory the server's root.
-//* `parent` : the path from `www` to the main module
-//* `module` : the id of the file if you were requiring it (without the js)
-//* `callback` : called as `callback(err, list)`. 
-// Return a list of script tags to add to a html file. 
-exports.tags = function(www, parent, module, callback, listOnly) {
-    list(www, parent, module, callback, false);
-}; 
+            if (!path && !isAbsolute) {
+                path = '.';
+            }
+            if (path && trailingSlash) {
+                path += '/';
+            }
 
-//###list
+            return (isAbsolute ? '/' : '') + path;
+        };
 
-//Same as tags, however returns only the properly ordered list of module ids and
-//corresponding file names.
-exports.list = function(www, parent, module, callback, listOnly) {
-    list(www, parent, module, callback, true);
-}; 
+        // posix version
+        exports.isAbsolute = function(path) {
+            return path.charAt(0) === '/';
+        };
 
-exports.debug = false;
+        // posix version
+        exports.join = function() {
+            var paths = Array.prototype.slice.call(arguments, 0);
+            return exports.normalize(filter(paths, function(p, index) {
+                if (typeof p !== 'string') {
+                    throw new TypeError('Arguments to path.join must be strings');
+                }
+                return p;
+            }).join('/'));
+        };
 
-function walk(module) {
-  modules[module.id] = module;
-  path.push(module.id);
-  module.index = -1;
-  module.deps.forEach(function(d) {
-    d = modules[d.id] || d;
-    if (d.index === undefined) walk(d); 
-    else if (d.index < 0) {
-      throw "Module " + module.id + " is dependent on module " + d.id +
-	'. However, module ' + d.id + ' is also directly or indirectly dependent on module ' +
-	module.id + ".\nDependency path to this point: \n" + path.join(' relies on \n') +
-	' relies on ' + d.id;
+
+        // path.relative(from, to)
+        // posix version
+        exports.relative = function(from, to) {
+            from = exports.resolve(from).substr(1);
+            to = exports.resolve(to).substr(1);
+
+            function trim(arr) {
+                var start = 0;
+                for (; start < arr.length; start++) {
+                    if (arr[start] !== '') break;
+                }
+
+                var end = arr.length - 1;
+                for (; end >= 0; end--) {
+                    if (arr[end] !== '') break;
+                }
+
+                if (start > end) return [];
+                return arr.slice(start, end - start + 1);
+            }
+
+            var fromParts = trim(from.split('/'));
+            var toParts = trim(to.split('/'));
+
+            var length = Math.min(fromParts.length, toParts.length);
+            var samePartsLength = length;
+            for (var i = 0; i < length; i++) {
+                if (fromParts[i] !== toParts[i]) {
+                    samePartsLength = i;
+                    break;
+                }
+            }
+
+            var outputParts = [];
+            for (var i = samePartsLength; i < fromParts.length; i++) {
+                outputParts.push('..');
+            }
+
+            outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+            return outputParts.join('/');
+        };
+
+        exports.sep = '/';
+        exports.delimiter = ':';
+
+        exports.dirname = function(path) {
+            var result = splitPath(path),
+            root = result[0],
+            dir = result[1];
+
+                if (!root && !dir) {
+                    // No dirname whatsoever
+                    return '.';
+                }
+
+            if (dir) {
+                // It has a dirname, strip trailing slash
+                dir = dir.substr(0, dir.length - 1);
+            }
+
+            return root + dir;
+        };
+
+
+        exports.basename = function(path, ext) {
+            var f = splitPath(path)[2];
+            // TODO: make this comparison case-insensitive on windows?
+            if (ext && f.substr(-1 * ext.length) === ext) {
+                f = f.substr(0, f.length - ext.length);
+            }
+            return f;
+        };
+
+
+        exports.extname = function(path) {
+            return splitPath(path)[3];
+        };
+
+        function filter (xs, f) {
+            if (xs.filter) return xs.filter(f);
+            var res = [];
+            for (var i = 0; i < xs.length; i++) {
+                if (f(xs[i], i, xs)) res.push(xs[i]);
+            }
+            return res;
+        }
+
+        // String.prototype.substr - negative index don't work in IE8
+        var substr = 'ab'.substr(-1) === 'b'
+            ? function (str, start, len) { return str.substr(start, len) }
+        : function (str, start, len) {
+            if (start < 0) start = str.length + start;
+            return str.substr(start, len);
+        };
+        return { exports: exports };
+    })();
+    
+    m['path'] = path;
+    var Path = path.exports;
+    
+    function resolve (__filename, by) {
+        return __filename;
     }
-  });
-  module.index = index++;
-  path.pop();
-}
-
-function endsWith(str, trail) {
-    return (str.substr(str.length-trail.length, str.length-1) === trail);
-};
-  
-function trailWith(str, trail) {
-    return str ? (str + (!endsWith(str, trail) ? trail : '')) : undefined;
-};
-
-function list(www, parent, id, cb, listOnly) {
-    try 
-    {  www = Path.resolve(www);
-       parent = Path.resolve(www, parent);
-       debug('Resolving: ' + id + ' in directory ' + parent);
-       var fileName = Path.resolve(parent, trailWith(id, '.js'));
-       try {
-       fs.statSync(fileName);
-       } catch(e) { cb(e,null);
-                    return;}
-       
-       required(fileName, {
-           includeSource: false
-       }, function(err, deps) {
-           if (err) throw err;
-           else { 
-               
-               modules = [];
-               walk({
-	           id: id,
-	           filename: fileName, 
-	           deps: deps,
-	           index: -1
-               });
-               var list = Object.keys(modules).map(function(m) {
-                   m = modules[m];
-	           var startWithWwwPath = m.filename.indexOf(www) === 0;
-	           if (!startWithWwwPath)
-                       throw 'Warning: ' + m.id  + ' was found outside the www directory (' + www + ')';
-                   m.route = m.filename.slice(www.length); 
-                   debug('module:',m);
-	           return m;
-               }).sort(function(a, b) {
-	           return a.index > b.index;
-               }).map(function(m) {
-                   return listOnly ?
-                       { id: m.id, route: m.route, filename: m.filename } :
-                   "<script type=\"text/javascript\" src=\"" + m.route + "\"></script>";
-               });
-               debug('Debug:\n', list);
-               cb(null, list); 
-           }
-       });
-    } catch(e) {
-        cb(e, null);
+    
+    var process = {
+        platform: 'browser'
+    };
+    
+    
+    function require(parent, moduleid) {
+        if (moduleid.indexOf('/') === -1) parent = '';
+        else {
+            if (Path.isAbsolute(moduleid)) parent = '/';
+            else moduleid = Path.join(parent, moduleid);
+            if (!Path.extname(moduleid)) moduleid += '.js';
+        }
+        var module = m[moduleid];
+        if (module) return module.exports;
+        var func = f[moduleid];
+        if (!func)
+            throw new Error('Couldn\'t resolve module with resolved path of ' +
+                            Path.join(Path.dirname(parent), moduleid));
+        func(function(__filename) { return require(Path.dirname(moduleid), __filename); },
+             module = m[moduleid] = {},
+             module.exports = {},
+             moduleid,
+             Path.dirname(moduleid),
+             process);
+        return module.exports;
     }
-};
 
-function debug() {
-    if (exports.debug) console.log.apply(console, arguments);
-}
+    //register
+    global.denodify = function (__filename, func) { 
+        f[__filename] = func;
+    };
+    
+    //execute
+    global.denodify.require = function(__filename) {
+        require('', __filename);
+    };
+    
+    global.denodify.debug = function(__filename) {
+        console.log('modules\n:', m);
+        console.log('funcs\n:', f);
+    };
+})(this);
+
+(this);
 
 
-
-// list('../', './test', './m3', function(err, tags) {
-//     console.log();
-//     console.log(tags);
-// }, true);
+// console.log(this.qdn.require('./r1', 'modules/../testmodule.js'));
+        

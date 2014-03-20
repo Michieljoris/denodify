@@ -1,4 +1,5 @@
 
-var m1 = require('./m1');
-console.log(m1);
-module.exports = "exported from module t2";
+console.log('in module t2');
+setTimeout(function() {
+    module.exports = "exported from module t2";
+},100);
