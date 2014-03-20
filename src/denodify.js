@@ -209,12 +209,10 @@
         return { exports: exports };
     })();
     
+    //End of path --------------------------------------
+    
     m['path'] = path;
     var Path = path.exports;
-    
-    function resolve (__filename, by) {
-        return __filename;
-    }
     
     var process = {
         platform: 'browser'
