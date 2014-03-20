@@ -18,10 +18,6 @@ This will also install a demo server. Run
 	
 to see denodify in action.
 
-Add to your module:
-
-    var denodify = require('denodify');
-
 Use:
 
 Add `src/denodify.js` to your sites javascript directory and load the file on
@@ -74,6 +70,11 @@ warning when it detects a circular dependency. If modules relied directly on
 each other the order would matter, but a loaded file only registers its source
 code and that can happen in any order as long as it happens before the
 denodify.require call.
+
+Add denodify-helper to your module:
+
+    var denodify = require('denodify');
+
 
 This is a very simple, but quite effective system, much better and easier than
 the old script injecting libraries like require.js or my own
