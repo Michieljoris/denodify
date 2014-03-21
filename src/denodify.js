@@ -35,9 +35,10 @@
 
     //###denodify
     //Use this to denodify javascript. Wrap your source code with
-    //    denodify('moduleid',function(require, module, exports, __filename, __dirname, process) {
+    
+    //     denodify('moduleid',function(require, module, exports, __filename, __dirname, process) {
     //       [your source code]
-    //    });
+    //     });
     global.denodify = function (__filename, func) { 
         f[__filename] = func;
     };

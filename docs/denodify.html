@@ -30,21 +30,16 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
-<span class="hljs-keyword">var</span> required = <span class="hljs-built_in">require</span>(<span class="hljs-string">'required'</span>);
-
-<span class="hljs-keyword">var</span> modules = [];
-<span class="hljs-keyword">var</span> path = [];
-<span class="hljs-keyword">var</span> index = <span class="hljs-number">0</span>;
-
-<span class="hljs-keyword">var</span> script = <span class="hljs-string">"var qdn=qdn||{require:function(module) {return qdn.m[module].exports;},m:{}};"</span>;
-
-<span class="hljs-keyword">var</span> languages = {
-    javascript : {
-        prefix : <span class="hljs-string">"(function(require, module, exports) {\n"</span>,
-        postfix : <span class="hljs-string">"\n\n})(qdn.require, qdn.m['./module']={exports:{}}, qdn.m['./module'].exports);"</span>
-    }   
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(global)</span> {</span>
+    
+    <span class="hljs-keyword">if</span> (global.denodify) <span class="hljs-keyword">return</span>;
+    
+    <span class="hljs-keyword">var</span> m = {};
+    <span class="hljs-keyword">var</span> f = {};
+    
+    <span class="hljs-keyword">var</span> process = {
+        platform: <span class="hljs-string">'browser'</span>
+    };</pre></div></div>
             
         </li>
         
@@ -55,11 +50,31 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Utility functions to enable use of nodejs modules in the browser. Used in
-<a href="http://github.com/Michieljoris/html-builder">html-builder</a> and
-<a href="http://github.com/Michieljoris/bb-server">bb-server</a>.</p>
+              <h3 id="api">API</h3>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">require</span><span class="hljs-params">(parent, moduleid)</span> {</span>
+        <span class="hljs-keyword">if</span> (moduleid.indexOf(<span class="hljs-string">'/'</span>) === -<span class="hljs-number">1</span>) parent = <span class="hljs-string">''</span>;
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">if</span> (Path.isAbsolute(moduleid)) parent = <span class="hljs-string">'/'</span>;
+            <span class="hljs-keyword">else</span> moduleid = Path.join(parent, moduleid);
+            <span class="hljs-keyword">if</span> (!Path.extname(moduleid)) moduleid += <span class="hljs-string">'.js'</span>;
+        }
+        <span class="hljs-keyword">var</span> module = m[moduleid];
+        <span class="hljs-keyword">if</span> (module) <span class="hljs-keyword">return</span> module.exports;
+        <span class="hljs-keyword">var</span> func = f[moduleid];
+        <span class="hljs-keyword">if</span> (!func)
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Couldn\'t resolve module with resolved path of '</span> +
+                            Path.join(Path.dirname(parent), moduleid));
+        func(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(__filename)</span> {</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">require</span>(Path.dirname(moduleid), __filename); },
+             module = m[moduleid] = {},
+             module.exports = {},
+             moduleid,
+             Path.dirname(moduleid),
+             process);
+        <span class="hljs-keyword">return</span> module.exports;
+    }</pre></div></div>
             
         </li>
         
@@ -70,7 +85,8 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <h3 id="wrap">wrap</h3>
+              <h3 id="denodify">denodify</h3>
+<p>Use this to denodify javascript. Wrap your source code with</p>
 
             </div>
             
@@ -83,11 +99,15 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Wrap a <code>string</code> of a nodejs module with the proper code to enable its use in
-the browser. Specify the <code>language</code> your nodejs module is written in to match
-the added code to the code of the module. Defaults to javascript.</p>
-
+              <pre><code>denodify(<span class="hljs-string">'moduleid'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(require, module, exports, __filename, __dirname, process)</span> {</span>
+  [your source code]
+});
+</code></pre>
             </div>
+            
+            <div class="content"><div class='highlight'><pre>    global.denodify = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(__filename, func)</span> {</span> 
+        f[__filename] = func;
+    };</pre></div></div>
             
         </li>
         
@@ -98,17 +118,15 @@ the added code to the code of the module. Defaults to javascript.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>If you leave 2 lines open at the top of every module wrap will replace the top
-line with the prefix wrapping code. This way line numbers in your modules will
-match the line numbers of the javascript file loaded in the browser</p>
+              <h3 id="require">require</h3>
+<p>Use this function to pull in or kickstart any defined nodejs modules from
+outside nodejs modules. </p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports.wrap = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(module, string, language)</span> {</span>
-    language = language || <span class="hljs-string">'javascript'</span>;
-    <span class="hljs-keyword">if</span> (string[<span class="hljs-number">0</span>] === <span class="hljs-string">'\n'</span>) string = string.slice(<span class="hljs-number">1</span>);
-    <span class="hljs-keyword">return</span> languages[language].prefix + string + languages[language].postfix.replace(<span class="hljs-regexp">/module/g</span>, module);
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    global.denodify.require = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(__filename)</span> {</span>
+        <span class="hljs-built_in">require</span>(<span class="hljs-string">''</span>, __filename);
+    };</pre></div></div>
             
         </li>
         
@@ -119,9 +137,14 @@ match the line numbers of the javascript file loaded in the browser</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <h3 id="script">script</h3>
+              <h3 id="debug">debug</h3>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>    global.denodify.debug = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(__filename)</span> {</span>
+        console.log(<span class="hljs-string">'modules\n:'</span>, m);
+        console.log(<span class="hljs-string">'funcs\n:'</span>, f);
+    };</pre></div></div>
             
         </li>
         
@@ -132,11 +155,9 @@ match the line numbers of the javascript file loaded in the browser</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Script to load in your html file before all denodified scripts.</p>
+              <p>End of API ———————————————————————-</p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>exports.script =  script;</pre></div></div>
             
         </li>
         
@@ -147,9 +168,13 @@ match the line numbers of the javascript file loaded in the browser</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <h3 id="tags">tags</h3>
+              <p>The rest is <code>path</code>, copied from path-browserify</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> path = (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">var</span> exports  = {};
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">normalizeArray</span><span class="hljs-params">(parts, allowAboveRoot)</span> {</span></pre></div></div>
             
         </li>
         
@@ -160,12 +185,23 @@ match the line numbers of the javascript file loaded in the browser</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>Given a main <code>module</code>, parses it for require calls, loads the corresponding
-module files and recursively parses them. Once all dependencies are found
-calls the <code>callback</code> with a list of tags that if loaded in the browser in the
-listed order all dependencies would be fullfilled for each module.</p>
+              <p>if the path tries to go above the root, <code>up</code> ends up &gt; 0</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> up = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = parts.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+                <span class="hljs-keyword">var</span> last = parts[i];
+                <span class="hljs-keyword">if</span> (last === <span class="hljs-string">'.'</span>) {
+                    parts.splice(i, <span class="hljs-number">1</span>);
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (last === <span class="hljs-string">'..'</span>) {
+                    parts.splice(i, <span class="hljs-number">1</span>);
+                    up++;
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (up) {
+                    parts.splice(i, <span class="hljs-number">1</span>);
+                    up--;
+                }
+            }</pre></div></div>
             
         </li>
         
@@ -176,11 +212,18 @@ listed order all dependencies would be fullfilled for each module.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>Callback is called with an error if a circular dependency is found or a
-dependency is found that is not in the <code>www</code> directory, or if any other error
-occurs.</p>
+              <p>if the path is allowed to go above the root, restore leading ..s</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (allowAboveRoot) {
+                <span class="hljs-keyword">for</span> (; up--; up) {
+                    parts.unshift(<span class="hljs-string">'..'</span>);
+                }
+            }
+
+            <span class="hljs-keyword">return</span> parts;
+        }</pre></div></div>
             
         </li>
         
@@ -191,19 +234,16 @@ occurs.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <ul>
-<li><code>www</code> : the directory the server’s root.</li>
-<li><code>parent</code> : the path from <code>www</code> to the main module</li>
-<li><code>module</code> : the id of the file if you were requiring it (without the js)</li>
-<li><code>callback</code> : called as <code>callback(err, list)</code>. 
-Return a list of script tags to add to a html file. </li>
-</ul>
+              <p>Split a filename into [root, dir, basename, ext], unix version
+‘root’ is just a slash, or nothing.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports.tags = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(www, parent, module, callback, listOnly)</span> {</span>
-    list(www, parent, module, callback, <span class="hljs-literal">false</span>);
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> splitPathRe =
+            <span class="hljs-regexp">/^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/</span>;
+        <span class="hljs-keyword">var</span> splitPath = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(filename)</span> {</span>
+            <span class="hljs-keyword">return</span> splitPathRe.exec(filename).slice(<span class="hljs-number">1</span>);
+        };</pre></div></div>
             
         </li>
         
@@ -214,9 +254,17 @@ Return a list of script tags to add to a html file. </li>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <h3 id="list">list</h3>
+              <p>path.resolve([from …], to)
+posix version</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>        exports.resolve = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <span class="hljs-keyword">var</span> resolvedPath = <span class="hljs-string">''</span>,
+            resolvedAbsolute = <span class="hljs-literal">false</span>;
+
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-built_in">arguments</span>.length - <span class="hljs-number">1</span>; i &gt;= -<span class="hljs-number">1</span> &amp;&amp; !resolvedAbsolute; i--) {
+                <span class="hljs-keyword">var</span> path = (i &gt;= <span class="hljs-number">0</span>) ? <span class="hljs-built_in">arguments</span>[i] : process.cwd();</pre></div></div>
             
         </li>
         
@@ -227,78 +275,305 @@ Return a list of script tags to add to a html file. </li>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>Same as tags, however returns only the properly ordered list of module ids and
-corresponding file names.</p>
+              <p>Skip empty and invalid entries</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>exports.list = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(www, parent, module, callback, listOnly)</span> {</span>
-    list(www, parent, module, callback, <span class="hljs-literal">true</span>);
-}; 
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> path !== <span class="hljs-string">'string'</span>) {
+                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">'Arguments to path.resolve must be strings'</span>);
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!path) {
+                    <span class="hljs-keyword">continue</span>;
+                }
 
-exports.debug = <span class="hljs-literal">false</span>;
+                resolvedPath = path + <span class="hljs-string">'/'</span> + resolvedPath;
+                resolvedAbsolute = path.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'/'</span>;
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>At this point the path should be resolved to a full absolute path, but
+handle relative paths to be safe (might happen when process.cwd() fails)</p>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">walk</span><span class="hljs-params">(module)</span> {</span>
-  modules[module.id] = module;
-  path.push(module.id);
-  module.index = -<span class="hljs-number">1</span>;
-  module.deps.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(d)</span> {</span>
-    d = modules[d.id] || d;
-    <span class="hljs-keyword">if</span> (d.index === <span class="hljs-literal">undefined</span>) walk(d); 
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (d.index &lt; <span class="hljs-number">0</span>) {
-      <span class="hljs-keyword">throw</span> <span class="hljs-string">"Module "</span> + module.id + <span class="hljs-string">" is dependent on module "</span> + d.id +
-	<span class="hljs-string">'. However, module '</span> + d.id + <span class="hljs-string">' is also directly or indirectly dependent on module '</span> +
-	module.id + <span class="hljs-string">".\nDependency path to this point: \n"</span> + path.join(<span class="hljs-string">' relies on \n'</span>) +
-	<span class="hljs-string">' relies on '</span> + d.id;
-    }
-  });
-  module.index = index++;
-  path.pop();
-}
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Normalize the path</p>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">list</span><span class="hljs-params">(www, parent, id, cb, listOnly)</span> {</span>
-    <span class="hljs-keyword">try</span> 
-    {  www = Path.resolve(www);
-       parent = Path.resolve(www, parent);
-       debug(<span class="hljs-string">'Resolving: '</span> + id + <span class="hljs-string">' in directory '</span> + parent);
-       <span class="hljs-keyword">var</span> fileName = Path.resolve(parent, id + <span class="hljs-string">'.js'</span>);
-       required(fileName, {
-           includeSource: <span class="hljs-literal">false</span>
-       }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, deps)</span> {</span>
-           <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
-           <span class="hljs-keyword">else</span> { 
-               walk({
-	           id: <span class="hljs-string">'./t3'</span>,
-	           filename: fileName, 
-	           deps: deps,
-	           index: -<span class="hljs-number">1</span>
-               });
-               <span class="hljs-keyword">var</span> list = <span class="hljs-built_in">Object</span>.keys(modules).map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(m)</span> {</span>
-                   m = modules[m];
-	           <span class="hljs-keyword">var</span> startWithWwwPath = m.filename.indexOf(www) === <span class="hljs-number">0</span>;
-	           <span class="hljs-keyword">if</span> (!startWithWwwPath)
-                       <span class="hljs-keyword">throw</span> <span class="hljs-string">'Warning: '</span> + m.id  + <span class="hljs-string">' was found outside the www directory ('</span> + www + <span class="hljs-string">')'</span>;
-                   m.route = m.filename.slice(www.length); 
-	           <span class="hljs-keyword">return</span> m;
-               }).sort(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> {</span>
-	           <span class="hljs-keyword">return</span> a.index &gt; b.index;
-               }).map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(m)</span> {</span>
-                   <span class="hljs-keyword">return</span> listOnly ?
-                       { id: m.id, filename: m.filename } :
-                   <span class="hljs-string">"&lt;script type=\"text/javascript\" src=\""</span> + m.route + <span class="hljs-string">"\"&gt;&lt;/script&gt;"</span>;
-               });
-               debug(<span class="hljs-string">'Debug:\n'</span>, list);
-               cb(<span class="hljs-literal">null</span>, list); 
-           }
-       });
-    } <span class="hljs-keyword">catch</span>(e) {
-        cb(e, <span class="hljs-literal">null</span>);
-    }
-};
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            resolvedPath = normalizeArray(filter(resolvedPath.split(<span class="hljs-string">'/'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(p)</span> {</span>
+                <span class="hljs-keyword">return</span> !!p;
+            }), !resolvedAbsolute).join(<span class="hljs-string">'/'</span>);
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">debug</span><span class="hljs-params">()</span> {</span>
-    <span class="hljs-keyword">if</span> (exports.debug) console.log.apply(console, <span class="hljs-built_in">arguments</span>);
-}</pre></div></div>
+            <span class="hljs-keyword">return</span> ((resolvedAbsolute ? <span class="hljs-string">'/'</span> : <span class="hljs-string">''</span>) + resolvedPath) || <span class="hljs-string">'.'</span>;
+        };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>path.normalize(path)
+posix version</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        exports.normalize = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(path)</span> {</span>
+            <span class="hljs-keyword">var</span> isAbsolute = exports.isAbsolute(path),
+            trailingSlash = substr(path, -<span class="hljs-number">1</span>) === <span class="hljs-string">'/'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Normalize the path</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            path = normalizeArray(filter(path.split(<span class="hljs-string">'/'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(p)</span> {</span>
+                <span class="hljs-keyword">return</span> !!p;
+                }), !isAbsolute).join(<span class="hljs-string">'/'</span>);
+
+            <span class="hljs-keyword">if</span> (!path &amp;&amp; !isAbsolute) {
+                path = <span class="hljs-string">'.'</span>;
+            }
+            <span class="hljs-keyword">if</span> (path &amp;&amp; trailingSlash) {
+                path += <span class="hljs-string">'/'</span>;
+            }
+
+            <span class="hljs-keyword">return</span> (isAbsolute ? <span class="hljs-string">'/'</span> : <span class="hljs-string">''</span>) + path;
+        };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>posix version</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        exports.isAbsolute = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(path)</span> {</span>
+            <span class="hljs-keyword">return</span> path.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'/'</span>;
+        };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>posix version</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        exports.join = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <span class="hljs-keyword">var</span> paths = <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">0</span>);
+            <span class="hljs-keyword">return</span> exports.normalize(filter(paths, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(p, index)</span> {</span>
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> p !== <span class="hljs-string">'string'</span>) {
+                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">'Arguments to path.join must be strings'</span>);
+                }
+                <span class="hljs-keyword">return</span> p;
+            }).join(<span class="hljs-string">'/'</span>));
+        };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>path.relative(from, to)
+posix version</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        exports.relative = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(from, to)</span> {</span>
+            from = exports.resolve(from).substr(<span class="hljs-number">1</span>);
+            to = exports.resolve(to).substr(<span class="hljs-number">1</span>);
+
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trim</span><span class="hljs-params">(arr)</span> {</span>
+                <span class="hljs-keyword">var</span> start = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">for</span> (; start &lt; arr.length; start++) {
+                    <span class="hljs-keyword">if</span> (arr[start] !== <span class="hljs-string">''</span>) <span class="hljs-keyword">break</span>;
+                }
+
+                <span class="hljs-keyword">var</span> end = arr.length - <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">for</span> (; end &gt;= <span class="hljs-number">0</span>; end--) {
+                    <span class="hljs-keyword">if</span> (arr[end] !== <span class="hljs-string">''</span>) <span class="hljs-keyword">break</span>;
+                }
+
+                <span class="hljs-keyword">if</span> (start &gt; end) <span class="hljs-keyword">return</span> [];
+                <span class="hljs-keyword">return</span> arr.slice(start, end - start + <span class="hljs-number">1</span>);
+            }
+
+            <span class="hljs-keyword">var</span> fromParts = trim(from.split(<span class="hljs-string">'/'</span>));
+            <span class="hljs-keyword">var</span> toParts = trim(to.split(<span class="hljs-string">'/'</span>));
+
+            <span class="hljs-keyword">var</span> length = <span class="hljs-built_in">Math</span>.min(fromParts.length, toParts.length);
+            <span class="hljs-keyword">var</span> samePartsLength = length;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) {
+                <span class="hljs-keyword">if</span> (fromParts[i] !== toParts[i]) {
+                    samePartsLength = i;
+                    <span class="hljs-keyword">break</span>;
+                }
+            }
+
+            <span class="hljs-keyword">var</span> outputParts = [];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = samePartsLength; i &lt; fromParts.length; i++) {
+                outputParts.push(<span class="hljs-string">'..'</span>);
+            }
+
+            outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+            <span class="hljs-keyword">return</span> outputParts.join(<span class="hljs-string">'/'</span>);
+        };
+
+        exports.sep = <span class="hljs-string">'/'</span>;
+        exports.delimiter = <span class="hljs-string">':'</span>;
+
+        exports.dirname = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(path)</span> {</span>
+            <span class="hljs-keyword">var</span> result = splitPath(path),
+            root = result[<span class="hljs-number">0</span>],
+            dir = result[<span class="hljs-number">1</span>];
+
+                <span class="hljs-keyword">if</span> (!root &amp;&amp; !dir) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>No dirname whatsoever</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">return</span> <span class="hljs-string">'.'</span>;
+                }
+
+            <span class="hljs-keyword">if</span> (dir) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>It has a dirname, strip trailing slash</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                dir = dir.substr(<span class="hljs-number">0</span>, dir.length - <span class="hljs-number">1</span>);
+            }
+
+            <span class="hljs-keyword">return</span> root + dir;
+        };
+
+
+        exports.basename = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(path, ext)</span> {</span>
+            <span class="hljs-keyword">var</span> f = splitPath(path)[<span class="hljs-number">2</span>];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>TODO: make this comparison case-insensitive on windows?</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (ext &amp;&amp; f.substr(-<span class="hljs-number">1</span> * ext.length) === ext) {
+                f = f.substr(<span class="hljs-number">0</span>, f.length - ext.length);
+            }
+            <span class="hljs-keyword">return</span> f;
+        };
+
+
+        exports.extname = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(path)</span> {</span>
+            <span class="hljs-keyword">return</span> splitPath(path)[<span class="hljs-number">3</span>];
+        };
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filter</span> <span class="hljs-params">(xs, f)</span> {</span>
+            <span class="hljs-keyword">if</span> (xs.filter) <span class="hljs-keyword">return</span> xs.filter(f);
+            <span class="hljs-keyword">var</span> res = [];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; xs.length; i++) {
+                <span class="hljs-keyword">if</span> (f(xs[i], i, xs)) res.push(xs[i]);
+            }
+            <span class="hljs-keyword">return</span> res;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>String.prototype.substr - negative index don’t work in IE8</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> substr = <span class="hljs-string">'ab'</span>.substr(-<span class="hljs-number">1</span>) === <span class="hljs-string">'b'</span>
+            ? <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(str, start, len)</span> {</span> <span class="hljs-keyword">return</span> str.substr(start, len) }
+        : <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(str, start, len)</span> {</span>
+            <span class="hljs-keyword">if</span> (start &lt; <span class="hljs-number">0</span>) start = str.length + start;
+            <span class="hljs-keyword">return</span> str.substr(start, len);
+        };
+        <span class="hljs-keyword">return</span> { exports: exports };
+    })();
+    
+    
+    m[<span class="hljs-string">'path'</span>] = path;
+    <span class="hljs-keyword">var</span> Path = path.exports;
+    
+})(<span class="hljs-keyword">this</span>);</pre></div></div>
             
         </li>
         

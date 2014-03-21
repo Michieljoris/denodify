@@ -81,7 +81,8 @@ the old script injecting libraries like require.js or my own
 [bootstrapjs](http://github.com/Michieljoris/bootstrapjs). And you get nodejs
 module compatibility for free.
 
-See also [source documentation](https://rawgithub.com/Michieljoris/denodify/master/docs/denodify.html).
+See also [denodefiy documentation](https://rawgithub.com/Michieljoris/denodify/master/docs/denodify.html).
+and [denodefiy-helper documentation](https://rawgithub.com/Michieljoris/denodify/master/docs/denodify-helper.html).
 
 TODO:
 * write tests
