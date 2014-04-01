@@ -1,0 +1,48 @@
+{
+  "name": "denodify",
+  "description": "Use nodejs modules in the browser. Used with bb-server and html-builder",
+  "homepage": "https://github.com/michieljoris/denodify",
+  "keywords": [
+    "denodify",
+    "dependency",
+    "detective",
+    "require",
+    "module",
+    "resolver"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michieljoris/denodify.git"
+  },
+  "author": {
+    "name": "Michiel van Oosten",
+    "email": "mail@axion5.net",
+    "url": "http://www.axion5.net/"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/michieljoris/denodify/blob/master/LICENSE.txt"
+    }
+  ],
+  "main": "src/denodify-helper",
+  "engines": {
+    "node": ">= 0.6.x"
+  },
+  "dependencies": {
+    "fs-extra": "0.8.x",
+    "required": "0.4.0",
+    "deputy": "0.0.4",
+    "colors": "*"
+  },
+  "devDependencies": {
+    "bb-server": "git://github.com/michieljoris/bb-server.git",
+    "html-builder": "git://github.com/michieljoris/html-builder.git",
+    "docco": "*"
+  },
+  "private": false,
+  "scripts": {
+    "docs": "node node_modules/.bin/docco src/denodify.js"
+  },
+  "version": "0.1.1"
+}
