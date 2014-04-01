@@ -165,7 +165,7 @@ var options = {
     //start a https server
     ,https: false
     //start a websocket server
-    ,websocket: true
+    // ,websocket: true
     //attaches session data to requests
     // ,sessions: {
     //     expires: 30
