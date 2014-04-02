@@ -23,7 +23,7 @@ var postfix = "});";
 //line with the prefix wrapping code. This way line numbers in your modules will
 //match the line numbers of the javascript file loaded in the browser
 exports.wrap = function(moduleid, string) {
-    console.log('in nodify.wrap', moduleid);
+    // console.log('in nodify.wrap', moduleid);
     if (string[0] === '\n') string = string.slice(1);
     var newPrefix = prefix.replace(/replace/g, Path.join('/', moduleid));
     // postfix = postfix.replace(/__dirname/, Path.dirname(module));
@@ -77,7 +77,7 @@ function walk(module) {
 	'. However, module ' + d.id + ' is also directly or indirectly dependent on module ' +
 	module.id + ".\nDependency path to this point: \n" + path.join(' relies on \n') +
 	' relies on ' + d.id;
-        console.log(str.red);
+        // console.log(str.red);
     }
   });
   module.index = index++;
@@ -122,7 +122,7 @@ function list(www, parent, id, cb, listOnly) {
 	           if (!startWithWwwPath)
                        throw 'Warning: ' + m.id  + ' was found outside the www directory (' + www + ')';
                    m.route = m.filename.slice(www.length); 
-                   debug('module:',m);
+                   // debug('module:',m);
 	           return m;
                }).sort(function(a, b) {
 	           return a.index > b.index;
@@ -131,7 +131,7 @@ function list(www, parent, id, cb, listOnly) {
                        { id: m.id, route: m.route, filename: m.filename } :
                    "<script type=\"text/javascript\" src=\"" + m.route + "\"></script>";
                });
-               debug('Debug:\n', list);
+               // debug('Debug:\n', list);
                cb(null, list); 
            }
        });
