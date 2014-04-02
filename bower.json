@@ -1,0 +1,32 @@
+{
+  "name": "denodify",
+  "description": "Scaffold for a website using bb-server and html-builder",
+  "homepage": "https://github.com/michieljoris/denodify",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michieljoris/denodify.git"
+  },
+  "authors": [
+    "Michiel van Oosten <mail@axion5.net>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.14",
+    "angular-ui": "~0.4.0",
+    "modernizr": "~2.7.2",
+    "bootstrap": "~3.1.1",
+    "foundation": "~5.2.0",
+    "jquery-ui": "~1.10.4",
+    "normalize.css": "~3.0.0"
+  },
+  "devDependencies": {},
+  "private": false,
+  "version": "0.0.5"
+}
