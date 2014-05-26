@@ -40,3 +40,8 @@ Buffer
 global - top-level scope object (window)
 __filename - file path of the currently executing file
 __dirname - directory path of the currently executing file
+
+I need to encode the modules request in script tags in demodularify in
+html-builder so that the server can decode it, and wrap modules
+(denodify-helper.wrap) with the right info, so that a require call from the
+module results in the right module being loaded.

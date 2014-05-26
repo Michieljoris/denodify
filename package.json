@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "fs-extra": "0.8.x",
-    "required": "0.4.x",
+    "required": "1.0.x",
     "deputy": "0.0.x",
     "colors": "*"
   },
@@ -44,5 +44,5 @@
   "scripts": {
     "docs": "node node_modules/.bin/docco src/denodify.js"
   },
-  "version": "0.1.1"
+  "version": "0.1.2"
 }

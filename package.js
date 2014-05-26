@@ -91,7 +91,8 @@ module.exports = {
         // "bb-server": "0.4.x",
         // "html-builder": "0.1.x",
         "fs-extra": "0.8.x",
-         required: "0.4.x",
+         // required: "0.4.x",
+         required: "1.0.x",
         "deputy": "0.0.x"
 	// "nodemailer": "*",
 	// "dbox": "*",

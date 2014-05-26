@@ -8,17 +8,28 @@ Organize javascript on the browser using the nodejs module system.
 Much simpler version than browserify, modules don't get bundled for instance,
 nor is there any plugin system browserifying all and sundry. 
 
-Install:
+#### Install:
 
     npm install denodify
 	
+To see the thing in action clone this repo.	
+
+First, for the coffeescript example make sure you have the coffee executable installed, eg:
+
+    sudo apt-get install coffeescript
+	
+Then:
+
+	npm install
+	
 This will also install a demo server. Run
 
-    node server/server.js
+	bin/serve
 	
-to see denodify in action.
+and open devtools to see denodify in action.
 
-Use:
+
+### Use:
 
 Add `src/denodify.js` to your sites javascript directory and load the file on
 your web page.

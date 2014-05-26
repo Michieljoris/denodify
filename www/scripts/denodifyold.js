@@ -5,60 +5,7 @@
     var m = {};
     var f = {};
     
-    var process = {
-        platform: 'browser'
-    };
-    
-    //###API
-    //
-    function require(parent, moduleid) {
-        if (moduleid.indexOf('/') === -1) parent = '';
-        else {
-            if (Path.isAbsolute(moduleid)) parent = '/';
-            else moduleid = Path.join(parent, moduleid);
-            if (!Path.extname(moduleid)) moduleid += '.js';
-        }
-        var module = m[moduleid];
-        if (module) return module.exports;
-        var func = f[moduleid];
-        if (!func)
-            throw new Error('Couldn\'t resolve module with resolved path of ' +
-                            Path.join(Path.dirname(parent), moduleid));
-        func(function(__filename) { return require(Path.dirname(moduleid), __filename); },
-             module = m[moduleid] = {},
-             module.exports = {},
-             moduleid,
-             Path.dirname(moduleid),
-             process);
-        return module.exports;
-    }
-
-    //###denodify
-    //Use this to denodify javascript. Wrap your source code with
-    
-    //     denodify('moduleid',function(require, module, exports, __filename, __dirname, process) {
-    //       [your source code]
-    //     });
-    global.denodify = function (__filename, func) { 
-        f[__filename] = func;
-    };
-    
-    //###require
-    //Use this function to pull in or kickstart any defined nodejs modules from
-    //outside nodejs modules. 
-    global.denodify.require = function(__filename) {
-        return require('', __filename);
-    };
-
-    //###debug
-    global.denodify.debug = function(__filename) {
-        console.log('modules\n:', m);
-        console.log('funcs\n:', f);
-    };
-    
-    //End of API -----------------------------------------------
-    
-    //The rest is `path`, copied from path-browserify
+    //copied from path-browserify
     var path = (function() {
         var exports  = {};
         function normalizeArray(parts, allowAboveRoot) {
@@ -262,8 +209,60 @@
         return { exports: exports };
     })();
     
-    
     m['path'] = path;
     var Path = path.exports;
     
+    function resolve (__filename, by) {
+        return __filename;
+    }
+    
+    var process = {
+        platform: 'browser'
+    };
+    
+    //###API
+    //
+    function require(parent, moduleid) {
+        if (moduleid.indexOf('/') === -1) parent = '';
+        else {
+            if (Path.isAbsolute(moduleid)) parent = '/';
+            else moduleid = Path.join(parent, moduleid);
+            if (!Path.extname(moduleid)) moduleid += '.js';
+        }
+        var module = m[moduleid];
+        if (module) return module.exports;
+        var func = f[moduleid];
+        if (!func)
+            throw new Error('Couldn\'t resolve module with resolved path of ' +
+                            Path.join(Path.dirname(parent), moduleid));
+        func(function(__filename) { return require(Path.dirname(moduleid), __filename); },
+             module = m[moduleid] = {},
+             module.exports = {},
+             moduleid,
+             Path.dirname(moduleid),
+             process);
+        return module.exports;
+    }
+
+    //###denodify
+    //Use this to denodify javascript. Wrap your source code with
+    //    denodify('moduleid',function(require, module, exports, __filename, __dirname, process) {
+    //       [your source code]
+    //    });
+    global.denodify = function (__filename, func) { 
+        f[__filename] = func;
+    };
+    
+    //###require
+    //Use this function to pull in or kickstart any defined nodejs modules from
+    //outside nodejs modules. 
+    global.denodify.require = function(__filename) {
+        return require('', __filename);
+    };
+
+    //###debug
+    global.denodify.debug = function(__filename) {
+        console.log('modules\n:', m);
+        console.log('funcs\n:', f);
+    };
 })(this);

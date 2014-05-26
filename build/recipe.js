@@ -107,11 +107,11 @@ var exports = {
     ,partials: {
         ids: {
             title: '<title>Scaffold</title>'
-            ,skewer: develop_mode ? '<script src="http://localhost:9090/skewer"></script>' : ' '
+            // ,skewer: develop_mode ? '<script src="http://localhost:9090/skewer"></script>' : ' '
             // ,recaptcha: '<script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>'
             // ,fragment: '<meta name="fragment" content="!">'
             
-            ,hello_world: '<h2>Hello world. Build on this scaffold!!!</h2>'
+            ,hello_world: '<h2>Hello world!</h2>'
         }
         ,metaBlock : {
             id: 'meta',
@@ -177,7 +177,7 @@ var exports = {
                     
                     // ,'router'
                     // ,'angular.js'
-                    'test.coffee'
+                    'test.coffee',
                     //this will be substitud with the list of required modules,
                     //in the proper order, also the module enabler script will
                     //be added before the first module in every block. When this
@@ -200,7 +200,8 @@ var exports = {
                     //because it needs to denodify.wrap it.
                     // ,'modules/mymodule.nm.js'
                     
-                    ,['modules/mymodule.js']
+                    ['modules/mymodule.js']
+                    ,'main.js'
                     
                 ],
                 path: 'scripts/'
@@ -239,8 +240,7 @@ var exports = {
                ,src: 'html/body.html' 
                ,tagIdPostfix: '--' //can be overridden per template
                ,mapping: {
-                   hello_world: "hello_world",
-                   chat: "html/chat.html"
+                   hello_world: "hello_world"
                }
              }
             ,{  
@@ -261,7 +261,7 @@ var exports = {
                //want to retrieve cachified versions. Include the resources
                //under cachify.list
                ,mapping: {
-                   head: ['title', 'meta',  'html/ieshim','skewer',
+                   head: ['title', 'meta',  'html/ieshim',//'skewer',
                           // 'firebug',
                           'headJsBlock',
                           'linkBlock'
