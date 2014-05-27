@@ -25,11 +25,12 @@
       "url": "http://github.com/michieljoris/denodify/blob/master/LICENSE.txt"
     }
   ],
-  "main": "src/denodify-helper",
+  "main": "src/denodify",
   "engines": {
     "node": ">= 0.6.x"
   },
   "dependencies": {
+    "dougs_vow": "*",
     "fs-extra": "0.8.x",
     "required": "1.0.x",
     "deputy": "0.0.x",
@@ -44,5 +45,5 @@
   "scripts": {
     "docs": "node node_modules/.bin/docco src/denodify.js"
   },
-  "version": "0.1.2"
+  "version": "0.1.4"
 }

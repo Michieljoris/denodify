@@ -68,7 +68,7 @@ module.exports = {
     // If there is a file that should be loaded when require()ing this 
     // folder-as-a-package, declare this file here, relative to our package 
     // structure.
-    "main": "src/denodify-helper",
+    "main": "src/denodify",
     // Essentially, which Node.js platforms do we support? These are glob
     // like expressions supported by the 
     // [npm semantic version parser](https://npmjs.org/doc/semver.html), 
@@ -90,6 +90,7 @@ module.exports = {
     "dependencies": {
         // "bb-server": "0.4.x",
         // "html-builder": "0.1.x",
+        "dougs_vow": "*",
         "fs-extra": "0.8.x",
          // required: "0.4.x",
          required: "1.0.x",

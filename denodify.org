@@ -36,12 +36,77 @@ Additionally if you use any of these variables, they will be defined in the
 bundled output in a browser-appropriate way:
 
 process
-Buffer
+   stdout
+   stderr
+   nextTick
+   and maybe all the functions as empty funcs
+Buffer ?
 global - top-level scope object (window)
 __filename - file path of the currently executing file
 __dirname - directory path of the currently executing file
+require.cache
+require.resolve()#
+Use the internal require() machinery to look up the location of a module, but
+rather than loading the module, just return the resolved filename.
+
+require.cache#
+Modules are cached in this object when they are required. By deleting a key
+value from this object, the next require will reload the module.
+
+* TODO
 
 I need to encode the modules request in script tags in demodularify in
 html-builder so that the server can decode it, and wrap modules
 (denodify-helper.wrap) with the right info, so that a require call from the
 module results in the right module being loaded.
+
+
+Add softlinks to files outside www dir in denodify-helper>list line 158
+
+Add extra info about module wrapper at denodify-helper.js >exports.wrap line 26
+
+Make expand more general, and adjust html-builder to use it properly.
+
+
+TODO
+* flow
+** write your code (or some of it) in modules
+Use require, module.exports, __process, __filename, dirname, process in your
+modules as usual.
+
+** require any node module like normal:
+Either relative ('./bla', '../bla', '/bla'), or in your module search path. So
+any module in a node_modules in a parent directory can be included.
+See http://nodejs.org/docs/v0.4.8/api/all.html#modules
+
+Which means you can install node modules in your project directory using npm
+for use in your server, and then require them in your client code as well, as
+long as you serve your files from a child directory in your project directory. 
+
+Included will be a list of core modules (url, util, crypto  etc). Make sure to serve
+the right one when a request such as  /__api/core_module/crypto comes in at your
+server.
+
+** make a list of scripts used
+Only list of the modules the ones that are not a dependency of other modules,
+so in general this would be your main.js file
+Freely intermix non-module javascript files with your list
+
+** pass this list to denodify.resolve
+It returns a bigger list , surrounded with script tags if desired, that
+includes the paths of all required modules, appended with a querystring such as
+?module=true@id=scripts/mymodule.js
+
+** Add this list to your browser
+Also included is a extra file called denodify that will make the module files
+play nicely in the browser together. It will be written to the www directory
+somewhere.
+
+** When a request comes in for a module on your server:
+Before sending the file have it wrapped by denodify.wrap.
+
+** If you have concatenated files, you can still have the modules wrapped:
+You will have to include an index to the modules in the concatenated file, and
+pass that to demodularify
+
+
