@@ -3,6 +3,7 @@ var Path = require('path');
 var fs = require('fs-extra');
 
 var makeScript = require('./make-script');
+var modules;
 
 var resolve = require('./resolve');
 
@@ -28,12 +29,11 @@ function insertScriptList(files, index, wwwPath, scriptPath, moduleId) {
                       else {
                           // files[index] = list.map(function(m) { return m.route; });
                           files[index] = list;
-                          console.log('found files:\n', files[index]);
+                          // console.log('found modules:\n', files[index]);
                           vow.keep(); }
                   }, false, debug); //tags, debug;
     return vow.promise;
 }
-
 
 function processOneScriptBlock(wwwPath, sb, denodifyPath) {
     var vow = VOW.make();
@@ -62,6 +62,7 @@ function processOneScriptBlock(wwwPath, sb, denodifyPath) {
                 if (typeof f === 'string') newList.push(Path.join(sb.path || '', f));
                 else {
                     f.forEach(function(f) {
+                        modules.push(f);
                         var route = f.route;
                         var ext = Path.extname(route);
                         //TODO also add preresolved name and path of file that requires it1!!
@@ -82,6 +83,9 @@ function processOneScriptBlock(wwwPath, sb, denodifyPath) {
     return vow.promise;
 }
 
+
+//TODO!!: also dedup files from before www dir, and set softlinks
+//see line 126 of resolve.js
 function deduplicate(blocks) {
     var listed = {};
     blocks.forEach(function(b) {
@@ -98,13 +102,14 @@ function expand(scriptBlock, wwwPath, cb, isDebug) {
     debug = isDebug;
     //make sure there is a denodify script in the scripts directory to load
     var denodifyPath = Path.join(wwwPath, 'scripts', 'denodify.js');
-    try {
-        fs.statSync(Path.resolve(denodifyPath));
-    } catch (e) {
-        console.log('demodularify: scripts/denodify not found, adding one.'.red);
-        fs.outputFileSync(Path.resolve(denodifyPath), makeScript());
-    } 
+    // try {
+    //     fs.statSync(Path.resolve(denodifyPath));
+    // } catch (e) {
+    //     console.log('demodularify: scripts/denodify not found, adding one.'.red);
+    //     fs.outputFileSync(Path.resolve(denodifyPath), makeScript());
+    // } 
     var vows = [];
+    modules = [];
     resolve.reset();
     scriptBlock.forEach(function(sb) {
         vows.push(processOneScriptBlock(wwwPath, sb, Path.join(sb.path || '', 'denodify.js')));
@@ -112,6 +117,8 @@ function expand(scriptBlock, wwwPath, cb, isDebug) {
     VOW.every(vows).when(
         function(blocks) {
             deduplicate(blocks);
+            makeScript(modules);
+            // fs.outputFileSync(Path.resolve(denodifyPath), makeScript(moduleList));
             cb(null, blocks);
         },
         function(err) {

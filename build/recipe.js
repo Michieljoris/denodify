@@ -198,7 +198,6 @@ var exports = {
                     //html-builder knows to add the required script tags here,
                     //and bb-server needs to know a requested script is a module
                     //because it needs to denodify.wrap it.
-                    // ,'modules/mymodule.nm.js'
                     
                     ['modules/mymodule.js']
                     ,'main.js'

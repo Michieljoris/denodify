@@ -7,6 +7,7 @@ whether to (if necessary) recast and parse for requires. So modify deputy. This
 is for use in html-builder
 
 * nodejs modules and globals to import:
+  https://github.com/alexgorbatchev/node-browser-builtins/tree/master/builtin
  https://github.com/substack/node-browserify 
 When you require() any of these modules, you will get a browser-specific shim:
 

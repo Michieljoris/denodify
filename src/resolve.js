@@ -4,6 +4,8 @@ var fs = require('fs-extra');
 require('colors');
 var debugMode;
 
+var crypto = require('crypto');
+
 var modules;
 var index;
 
@@ -119,11 +121,15 @@ function resolve(www, parent, id, cb, tags, isDebug) {
                    else {
 	               var startWithWwwPath = m.filename.indexOf(www) === 0;
 	               if (!startWithWwwPath) {
-                           m.route = 'node_modules/' + m.index + '_' +  Path.basename(m.filename);
+                           // var hash = crypto.createHash('md5').update(m.filename).digest('hex');
+                           // m.route = 'node_modules/' + hash + '_' +  Path.basename(m.filename);
+                           m.route = m.filename;
                            //TODO set softlinks to filename in www/node_modules dir
+                           //possibly do deduplication?
                            // console.log( 'Warning: ' + m.id  + ' was found outside the www directory (' + www + ')');
                        }
-                       else m.route = m.filename.slice(www.length); 
+                       else m.route = m.filename.slice(www.length+1); 
+                       
                        m.deps = m.deps.map(function(d) { return d.id; });
                    }
                    // debug('module:',m);

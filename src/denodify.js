@@ -14,7 +14,7 @@ var Path = require('path');
 //match the line numbers of the javascript file loaded in the browser
   
 var prefix = "denodify(function(require,module,exports,__filename,__dirname,process,global){\n";
-var postfix = ",moduleid});";
+var postfix = "},moduleid);";
 
 exports.wrap = function(moduleid, string) {
     if (string[0] === '\n') string = string.slice(1);
