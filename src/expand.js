@@ -35,7 +35,8 @@ function insertScriptList(files, index, wwwPath, scriptPath, moduleId) {
     return vow.promise;
 }
 
-function processOneScriptBlock(wwwPath, sb, denodifyPath) {
+// function processOneScriptBlock(wwwPath, sb, denodifyPath) {
+function processOneScriptBlock(wwwPath, sb) {
     var vow = VOW.make();
     var vows = [];
     var files = sb.files;
@@ -46,7 +47,7 @@ function processOneScriptBlock(wwwPath, sb, denodifyPath) {
         //TODO to be autodetected later by being clever using recast, detective and caching
         //for now just indicate it is a module by clamping it within [ and ]
         if (typeof f !== 'string') { 
-            containsModules = true;
+            // containsModules = true;
             vows.push(insertScriptList(files, index, wwwPath, sb.path, f[0]));
         }
         else vows.push(VOW.kept(sb.files));
@@ -57,16 +58,15 @@ function processOneScriptBlock(wwwPath, sb, denodifyPath) {
     else VOW.every(vows).when(
         function() {
             var newList = [];
-            if (containsModules) newList.push(denodifyPath);
+            // if (containsModules) newList.push(denodifyPath);
             files.forEach(function(f) {
                 if (typeof f === 'string') newList.push(Path.join(sb.path || '', f));
                 else {
                     f.forEach(function(f) {
                         modules.push(f);
                         var route = f.route;
-                        var ext = Path.extname(route);
-                        //TODO also add preresolved name and path of file that requires it1!!
-                        route = Path.dirname(route) + '/' + Path.basename(route, ext) + ext;
+                        // var ext = Path.extname(route);
+                        // route = Path.dirname(route) + '/' + Path.basename(route, ext) + ext;
                         newList.push(route + (f.core ? '' : "?module=" + f.index));
                         // console.log(f);
                     });
@@ -83,9 +83,6 @@ function processOneScriptBlock(wwwPath, sb, denodifyPath) {
     return vow.promise;
 }
 
-
-//TODO!!: also dedup files from before www dir, and set softlinks
-//see line 126 of resolve.js
 function deduplicate(blocks) {
     var listed = {};
     blocks.forEach(function(b) {
@@ -101,7 +98,7 @@ function deduplicate(blocks) {
 function expand(scriptBlock, wwwPath, cb, isDebug) {
     debug = isDebug;
     //make sure there is a denodify script in the scripts directory to load
-    var denodifyPath = Path.join(wwwPath, 'scripts', 'denodify.js');
+    var denodifyPath = Path.join(wwwPath, 'denodify.js');
     // try {
     //     fs.statSync(Path.resolve(denodifyPath));
     // } catch (e) {
@@ -112,13 +109,14 @@ function expand(scriptBlock, wwwPath, cb, isDebug) {
     modules = [];
     resolve.reset();
     scriptBlock.forEach(function(sb) {
-        vows.push(processOneScriptBlock(wwwPath, sb, Path.join(sb.path || '', 'denodify.js')));
+        // vows.push(processOneScriptBlock(wwwPath, sb, Path.join(sb.path || '', 'denodify.js')));
+        vows.push(processOneScriptBlock(wwwPath, sb));
     });
     VOW.every(vows).when(
         function(blocks) {
             deduplicate(blocks);
-            // makeScript(modules);
-            fs.outputFileSync(Path.resolve(denodifyPath), makeScript(modules));
+            blocks[0].files = ['denodify.js'].concat(blocks[0].files);
+            fs.outputFileSync(Path.resolve(denodifyPath), makeScript(modules, Path.resolve(wwwPath)));
             cb(null, blocks);
         },
         function(err) {

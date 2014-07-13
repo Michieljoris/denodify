@@ -151,12 +151,12 @@ var exports = {
         //their own css and js files, these would be added to the last block, or
         //te first block that has the extra:true attribute
         ,scriptBlock: [
-            {
-                id: 'headJsBlock',
-                files: [
-                ],
-                path: 'scripts/'
-            },
+            // {
+            //     id: 'headJsBlock',
+            //     files: [
+            //     ],
+            //     path: 'scripts/'
+            // },
             {
                 id: 'jsBlock',
                 files: [
@@ -262,7 +262,7 @@ var exports = {
                ,mapping: {
                    head: ['title', 'meta',  'html/ieshim',//'skewer',
                           // 'firebug',
-                          'headJsBlock',
+                          // 'headJsBlock',
                           'linkBlock'
                           ,'cachify'
                          ],

@@ -1,5 +1,5 @@
-var url = require('url');
-console.log(url);
+// var url = require('url');
+// console.log(url);
 global.bla = 'this is a global';
 //------------------------
 var r1export = require('./r1');
