@@ -117,8 +117,8 @@ function expand(scriptBlock, wwwPath, cb, isDebug) {
     VOW.every(vows).when(
         function(blocks) {
             deduplicate(blocks);
-            makeScript(modules);
-            // fs.outputFileSync(Path.resolve(denodifyPath), makeScript(moduleList));
+            // makeScript(modules);
+            fs.outputFileSync(Path.resolve(denodifyPath), makeScript(modules));
             cb(null, blocks);
         },
         function(err) {

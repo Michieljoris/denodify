@@ -94,5 +94,54 @@
     
 
 //module info
-    var resolve = [];
+    var m = {
+	"0": {
+		"filename": "/home/michieljoris/mysrc/javascript/denodify/node_modules/cachejs/lib/lru_cache.js",
+		"resolve": {}
+	},
+	"1": {
+		"filename": "/home/michieljoris/mysrc/javascript/denodify/node_modules/cachejs/lib/arc_cache.js",
+		"resolve": {
+			"./lru_cache": 0
+		}
+	},
+	"2": {
+		"filename": "/home/michieljoris/mysrc/javascript/denodify/node_modules/cachejs/cachejs.js",
+		"resolve": {
+			"./lib/lru_cache": 0,
+			"./lib/arc_cache": 1
+		}
+	},
+	"3": {
+		"filename": "b1.js",
+		"resolve": {}
+	},
+	"4": {
+		"filename": "scripts/b1.js",
+		"resolve": {
+			"cachejs": 2,
+			"../b1": 3
+		}
+	},
+	"5": {
+		"filename": "scripts/modules/r1.js",
+		"resolve": {
+			"../b1": 4
+		}
+	},
+	"6": {
+		"filename": "scripts/modules/mymodule.js",
+		"resolve": {
+			"url": "url",
+			"./r1": 5,
+			"cachejs": 2,
+			"../b1.js": 4,
+			"../b1": 4
+		}
+	},
+	"url": {
+		"filename": "__api/core_module/url",
+		"resolve": {}
+	}
+};
 })(this);

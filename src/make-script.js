@@ -47,7 +47,7 @@ function makeScript(modules) {
     var script = fs.readFileSync(__dirname + '/denodify-browser.js');
     script = script.slice(0, script.length-10) + 
         '\n//module info' + 
-        '\n    var m = ' + JSON.stringify(modules.byIndex) + ';' + 
+        '\n    var m = ' + JSON.stringify(m, null, '\t') + ';' + 
         '\n})(this);\n';
     return script;
 }
