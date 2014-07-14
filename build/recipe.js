@@ -151,12 +151,12 @@ var exports = {
         //their own css and js files, these would be added to the last block, or
         //te first block that has the extra:true attribute
         ,scriptBlock: [
-            {
-                id: 'headJsBlock',
-                files: [
-                ],
-                path: 'scripts/'
-            },
+            // {
+            //     id: 'headJsBlock',
+            //     files: [
+            //     ],
+            //     path: 'scripts/'
+            // },
             {
                 id: 'jsBlock',
                 files: [
@@ -198,7 +198,6 @@ var exports = {
                     //html-builder knows to add the required script tags here,
                     //and bb-server needs to know a requested script is a module
                     //because it needs to denodify.wrap it.
-                    // ,'modules/mymodule.nm.js'
                     
                     ['modules/mymodule.js']
                     ,'main.js'
@@ -263,7 +262,7 @@ var exports = {
                ,mapping: {
                    head: ['title', 'meta',  'html/ieshim',//'skewer',
                           // 'firebug',
-                          'headJsBlock',
+                          // 'headJsBlock',
                           'linkBlock'
                           ,'cachify'
                          ],

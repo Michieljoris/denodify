@@ -107,7 +107,7 @@ var options = {
        // ,minify: []
         ,minify: false
         // minify: ['js', 'css' ] //js, css, html
-        ,zip: /text|javascript|json/ //regex on the mimetype
+        // ,zip: /text|javascript|json/ //regex on the mimetype
         ,verbose: true
     }
     

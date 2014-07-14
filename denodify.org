@@ -7,6 +7,7 @@ whether to (if necessary) recast and parse for requires. So modify deputy. This
 is for use in html-builder
 
 * nodejs modules and globals to import:
+  https://github.com/alexgorbatchev/node-browser-builtins/tree/master/builtin
  https://github.com/substack/node-browserify 
 When you require() any of these modules, you will get a browser-specific shim:
 
@@ -55,17 +56,43 @@ value from this object, the next require will reload the module.
 
 * TODO
 
-I need to encode the modules request in script tags in demodularify in
+* DONE I need to encode the modules request in script tags in demodularify in
 html-builder so that the server can decode it, and wrap modules
 (denodify-helper.wrap) with the right info, so that a require call from the
 module results in the right module being loaded.
 
 
-Add softlinks to files outside www dir in denodify-helper>list line 158
+* Add softlinks to files outside www dir in denodify-helper>list line 158
 
-Add extra info about module wrapper at denodify-helper.js >exports.wrap line 26
+* DONE Add extra info about module wrapper at denodify-helper.js >exports.wrap line 26 Done
 
-Make expand more general, and adjust html-builder to use it properly.
+* Make expand more general, and adjust html-builder to use it properly.
+ So it can be used independent from html-builder and bb-server!! 
+
+* multiple scriptblocks? multiple [modules/mymodule.js] entries in one scriptblock?
+This is not tested, but needs to be, especially multiple scriptblocks with
+modules in them. 
+
+* core modules relying on other core modules :-(
+ Either factor out the dependencies in denodify-core, or resolve them
+ somehow... 
+ Solution: just like lib modules (from outside www dir tree) are in
+ www/_node_modules, core modules are in www/_core_modules. make-script puts
+ them there, copied from a required denodify-core file.
+ These modules resolve the same every time, so this can be done
+ beforehand. denodify-core should provide a function that copies the required
+ files to the www/_core_modules dir and supplies a list to add to the script
+ tags to html-builder
+
+* detect modules by using detective instead of marking them with [module] in html-builder
+  
+* html-builder needs to add index to concatenated files that 
+contain files that need to be recast so that bb-server can pull the
+concatenated file apart, recast and concat again. Ummm?? 
+No, as stated in html-builder.org, when concatenated===true in recipe, html
+builder just adds scripblockname.bundle.js to the script tags and creates a file
+with that name that just lists the files in the bundle. Bb-server can recast,
+minify concat and gzip, and cache them then and send them to the browser.
 
 
 TODO

@@ -1,1 +1,1 @@
-denodify.require('/scripts/modules/mymodule.js');
+denodify.require('scripts/modules/mymodule.js');
