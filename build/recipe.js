@@ -6,7 +6,7 @@ var mainMenuTree = [
     //    //     ]
     // }
 ];
-
+ 
 var slides =  [
     // { url: "images/slides/home_page_Early_Childhood_Education_and_Care_training.jpg"
     //   // ,title: 'Early Childhood Education and Care training'
@@ -27,6 +27,13 @@ var exports = {
         ,www: 'www'
         ,out:'built' 
         ,js: 'scripts'
+    }
+    
+    ,reload: {
+        // enable: develop_mode,
+        enable: develop_mode,
+        msg: "reload"
+        //url is in the file bin/URL
     }
     /*
       If cachify if falsy resources will be requested as is, without a
@@ -177,7 +184,7 @@ var exports = {
                     
                     // ,'router'
                     // ,'angular.js'
-                    'test.coffee',
+                    // 'test.coffee',
                     //this will be substitud with the list of required modules,
                     //in the proper order, also the module enabler script will
                     //be added before the first module in every block. When this

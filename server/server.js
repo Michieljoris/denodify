@@ -24,7 +24,7 @@ var options = {
     // over instead of the directory listing. Assign a string to look
     // for and send a different default file. Defaults to false and to
     // 'index.html' if assigned true.
-    ,index: false
+    ,index: true
     
     //if a request for /favicon comes in send the favicon found in the
     //path specified (relative to where this script is executed from), 
@@ -97,11 +97,11 @@ var options = {
     // ,recast: develop_mode ? false : {
     ,recast:  {
         transpile: [
-            'coffeescript'
+            // 'coffeescript'
             // ,'jade', 'less', 'stylus', 'sweetjs',
             // 'typescript'
             // ,'markdown'
-            ,'denodify'
+            'denodify'
         ]
         // ,transpile: []  //TODO add all current supported file types
        // ,minify: []
@@ -176,10 +176,12 @@ var options = {
     //     // }
     // }
     // }
+    
+    ,reload: develop_mode ? true : false
     //server api path:
     ,api: '_api'
     //use persona to authenticate
-    ,persona: true
+    ,persona: false
     ,emails: ['mail@axion5.net']
     //
     //enable server api:

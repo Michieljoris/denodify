@@ -72,13 +72,18 @@ function makeScript(modules, wwwPath) {
         // console.log(inde);
         var m = byIndex[k];
         if (m.lib) {
-            console.log('making softlink:\n', Path.join(wwwPath, m.route) + ' --> ' +
-                m.filename);
+            var softlink = Path.join(wwwPath, m.route);
+            console.log('Making sure path to softlink exists; ',
+                        Path.dirname(softlink));
+            console.log('Making softlink:\n',softlink + ' --> ' +
+                        m.filename);
             try {
+                fs.mkdirpSync(Path.dirname(softlink));
                 fs.symlinkSync(m.filename, Path.join(wwwPath, m.route) );
             }
             catch(e) {
-                console.log(e);
+                if (e.code === 'EEXIST') console.log('>>>> Softlink already exists');
+                else console.log(e);
             }
         }
     });
