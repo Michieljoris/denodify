@@ -90,12 +90,12 @@ function resolve(www, parent, id, cb, tags, isDebug) {
     {  www = Path.resolve(www);
        parent = Path.resolve(www, parent);
        console.log('Resolving: ' + id + ' in directory ' + parent);
+       
        var fileName = Path.resolve(parent, trailWith(id, '.js'));
        try {
            fs.statSync(fileName);
        } catch(e) { cb(e,null);
                     return;}
-       
        required(fileName, {
            includeSource: false,
            ignoreMissing: function(name, parent) {
@@ -104,7 +104,10 @@ function resolve(www, parent, id, cb, tags, isDebug) {
            }
            // resolve: ..
        }, function(err, deps) {
-           if (err) throw err;
+           if (err) {
+               cb(err, null);
+               // throw err;
+           }
            else { 
                var modules = getList(
                    {   id: id,
@@ -171,3 +174,4 @@ module.exports = {
 //     console.log();
 //     console.log(tags);
 // }, true);
+
