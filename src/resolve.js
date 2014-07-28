@@ -1,5 +1,5 @@
 var Path = require('path');
-var required = require('required');
+var required = require('./required');
 var fs = require('fs-extra');
 require('colors');
 var debugMode;

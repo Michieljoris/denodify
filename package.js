@@ -94,7 +94,8 @@ module.exports = {
         "fs-extra": "0.8.x",
          // required: "0.4.x",
          required: "1.0.x",
-        "deputy": "0.0.x"
+        "deputy": "0.0.x",
+        "detective": "3.1.x"
 	// "nodemailer": "*",
 	// "dbox": "*",
         // "nodemailer": "0.5.x",
