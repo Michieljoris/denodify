@@ -120,20 +120,20 @@ function resolve(www, parent, id, cb, tags, isDebug) {
                var list = Object.keys(modules).map(function(m) {
                    m = modules[m];
                    if (m.core) {
-                       m.route = '_core_modules/' + m.id;
+                       m.route = '/_core_modules/' + m.id;
                    }
                    else {
 	               var startWithWwwPath = m.filename.indexOf(www) === 0;
 	               if (!startWithWwwPath) {
                            var hash = crypto.createHash('md5').update(m.filename).digest('hex');
-                           m.route = '_node_modules/' + hash + '_' +  Path.basename(m.filename);
+                           m.route = '/_node_modules/' + hash + '_' +  Path.basename(m.filename);
                            m.lib = true;
                            // m.route = m.filename;
                            //TODO set softlinks to filename in www/node_modules dir
                            //possibly do deduplication?
                            // console.log( 'Warning: ' + m.id  + ' was found outside the www directory (' + www + ')');
                        }
-                       else m.route = m.filename.slice(www.length+1); 
+                       else m.route = m.filename.slice(www.length); 
                        
                        m.deps = m.deps.map(function(d) { return d.id; });
                    }

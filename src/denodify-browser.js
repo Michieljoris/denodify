@@ -49,7 +49,8 @@
         var data = m[index].d;
         if (data) return data.exports;
         var func = m[index].f;
-        if (!func) error('load', m[index].route);
+        // if (!func) error('load', m[index].route);
+        if (!func) error('load', m[index].filename);
         func(
             function(moduleid) { //require
                 var requiredIndex = m[index].resolve[moduleid];

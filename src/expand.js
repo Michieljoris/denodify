@@ -23,7 +23,9 @@ function endsWith(str, trail) {
 function insertScriptList(files, index, wwwPath, scriptPath, moduleId) {
     var vow = VOW.make();
     // console.log(moduleId);
-    resolve.resolve(wwwPath,Path.join(scriptPath, Path.dirname(moduleId)), Path.basename(moduleId), 
+    
+    //make sure scriptPath is relative, not absolute
+    resolve.resolve(wwwPath,Path.join('./', scriptPath, Path.dirname(moduleId)), Path.basename(moduleId), 
                   function(err, list) {
                       if (err) vow.breek(err);
                       else {
@@ -60,7 +62,7 @@ function processOneScriptBlock(wwwPath, sb) {
             var newList = [];
             // if (containsModules) newList.push(denodifyPath);
             files.forEach(function(f) {
-                if (typeof f === 'string') newList.push(Path.join(sb.path || '', f));
+                if (typeof f === 'string') newList.push(Path.join('/', sb.path || '', f));
                 else {
                     f.forEach(function(f) {
                         modules.push(f);
@@ -95,7 +97,8 @@ function deduplicate(blocks) {
     }); 
 }
 
-function expand(scriptBlock, wwwPath, cb, isDebug) {
+function expand(scriptBlock, wwwPath, isDebug) {
+    var vow = VOW.make();
     debug = isDebug;
     //make sure there is a denodify script in the scripts directory to load
     var denodifyPath = Path.join(wwwPath, 'denodify.js');
@@ -115,13 +118,16 @@ function expand(scriptBlock, wwwPath, cb, isDebug) {
     VOW.every(vows).when(
         function(blocks) {
             deduplicate(blocks);
-            blocks[0].files = ['denodify.js'].concat(blocks[0].files);
+            blocks[0].files = ['/denodify.js'].concat(blocks[0].files);
             fs.outputFileSync(Path.resolve(denodifyPath), makeScript(modules, Path.resolve(wwwPath)));
-            cb(null, blocks);
+            vow.keep(blocks);
+            // cb(null, blocks);
         },
         function(err) {
-            cb({ err: err}, scriptBlock);
+            vow.breek(err);
+            // cb({ err: err}, scriptBlock);
         });
+    return vow.promise;
 }
 
 module.exports = expand; 
