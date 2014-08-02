@@ -65,7 +65,7 @@ function makeScript(modules, wwwPath) {
         } 
     });
     // console.log('Byid:\n', byId);
-    console.log('By index:\n', byIndex);
+    // console.log('By index:\n', byIndex);
     
     //we need to make the softlinks for the lib modules that were requiredk
     Object.keys(byIndex).forEach(function(k) {

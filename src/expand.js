@@ -6,6 +6,7 @@ var makeScript = require('./make-script');
 var modules;
 
 var resolve = require('./resolve');
+var containsModules;
 
 
 var debug;
@@ -43,13 +44,12 @@ function processOneScriptBlock(wwwPath, sb) {
     var vows = [];
     var files = sb.files;
     var index = 0;
-    var containsModules = false;
     
     files.forEach(function(f) {
         //TODO to be autodetected later by being clever using recast, detective and caching
         //for now just indicate it is a module by clamping it within [ and ]
         if (typeof f !== 'string') { 
-            // containsModules = true;
+            containsModules = true;
             vows.push(insertScriptList(files, index, wwwPath, sb.path, f[0]));
         }
         else vows.push(VOW.kept(sb.files));
@@ -100,6 +100,7 @@ function deduplicate(blocks) {
 function expand(scriptBlock, wwwPath, isDebug) {
     var vow = VOW.make();
     debug = isDebug;
+    containsModules = false;
     //make sure there is a denodify script in the scripts directory to load
     var denodifyPath = Path.join(wwwPath, 'denodify.js');
     // try {
@@ -118,7 +119,8 @@ function expand(scriptBlock, wwwPath, isDebug) {
     VOW.every(vows).when(
         function(blocks) {
             deduplicate(blocks);
-            blocks[0].files = ['/denodify.js'].concat(blocks[0].files);
+            if (containsModules)
+                blocks[0].files = ['/denodify.js'].concat(blocks[0].files);
             fs.outputFileSync(Path.resolve(denodifyPath), makeScript(modules, Path.resolve(wwwPath)));
             vow.keep(blocks);
             // cb(null, blocks);
