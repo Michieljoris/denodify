@@ -44,6 +44,7 @@ function processOneScriptBlock(wwwPath, sb) {
     var vows = [];
     var files = sb.files;
     var index = 0;
+    // console.log('Processing script block', sb);
     
     files.forEach(function(f) {
         //TODO to be autodetected later by being clever using recast, detective and caching
@@ -102,6 +103,7 @@ function expand(scriptBlock, wwwPath, isDebug) {
     debug = isDebug;
     containsModules = false;
     //make sure there is a denodify script in the scripts directory to load
+    // console.log('------------------------------', wwwPath);
     var denodifyPath = Path.join(wwwPath, 'denodify.js');
     // try {
     //     fs.statSync(Path.resolve(denodifyPath));
@@ -119,9 +121,11 @@ function expand(scriptBlock, wwwPath, isDebug) {
     VOW.every(vows).when(
         function(blocks) {
             deduplicate(blocks);
-            if (containsModules)
+            if (containsModules) {
                 blocks[0].files = ['/denodify.js'].concat(blocks[0].files);
-            fs.outputFileSync(Path.resolve(denodifyPath), makeScript(modules, Path.resolve(wwwPath)));
+                // console.log('writing denodify.js to ', denodifyPath, Path.resolve(denodifyPath));
+                fs.outputFileSync(Path.resolve(denodifyPath), makeScript(modules, Path.resolve(wwwPath)));
+            }
             vow.keep(blocks);
             // cb(null, blocks);
         },
