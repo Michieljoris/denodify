@@ -1,0 +1,504 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/michieljoris/bin/node',
+1 verbose cli   '/home/michieljoris/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@1.4.9
+3 info using node@v0.10.28
+4 verbose node symlink /home/michieljoris/bin/node
+5 verbose publish [ '.' ]
+6 verbose cache add [ '.', null ]
+7 verbose cache add name=undefined spec="." args=[".",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: '.',
+8 verbose parsed url   path: '.',
+8 verbose parsed url   href: '.' }
+9 silly lockFile 3a52ce78- .
+10 verbose lock . /home/michieljoris/.npm/3a52ce78-.lock
+11 verbose tar pack [ '/home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz',
+11 verbose tar pack   '.' ]
+12 verbose tarball /home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz
+13 verbose folder .
+14 info prepublish denodify@0.1.17
+15 silly lockFile 1f1177db-tar tar://.
+16 verbose lock tar://. /home/michieljoris/.npm/1f1177db-tar.lock
+17 silly lockFile 80c62663-7918-0-15388305159285665-tmp-tgz tar:///home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz
+18 verbose lock tar:///home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz /home/michieljoris/.npm/80c62663-7918-0-15388305159285665-tmp-tgz.lock
+19 silly lockFile 1f1177db-tar tar://.
+20 silly lockFile 1f1177db-tar tar://.
+21 silly lockFile 80c62663-7918-0-15388305159285665-tmp-tgz tar:///home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz
+22 silly lockFile 80c62663-7918-0-15388305159285665-tmp-tgz tar:///home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz
+23 verbose tar unpack /home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz
+24 silly lockFile 3722f712-oris-npm-denodify-0-1-17-package tar:///home/michieljoris/.npm/denodify/0.1.17/package
+25 verbose lock tar:///home/michieljoris/.npm/denodify/0.1.17/package /home/michieljoris/.npm/3722f712-oris-npm-denodify-0-1-17-package.lock
+26 silly lockFile 80c62663-7918-0-15388305159285665-tmp-tgz tar:///home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz
+27 verbose lock tar:///home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz /home/michieljoris/.npm/80c62663-7918-0-15388305159285665-tmp-tgz.lock
+28 silly gunzTarPerm modes [ '755', '644' ]
+29 silly gunzTarPerm extractEntry package.json
+30 silly gunzTarPerm modified mode [ 'package.json', 488, 492 ]
+31 silly gunzTarPerm extractEntry .npmignore
+32 silly gunzTarPerm modified mode [ '.npmignore', 488, 492 ]
+33 silly gunzTarPerm extractEntry README.md
+34 silly gunzTarPerm modified mode [ 'README.md', 488, 492 ]
+35 silly gunzTarPerm extractEntry bower.js
+36 silly gunzTarPerm modified mode [ 'bower.js', 488, 492 ]
+37 silly gunzTarPerm extractEntry package.js
+38 silly gunzTarPerm modified mode [ 'package.js', 488, 492 ]
+39 silly gunzTarPerm extractEntry www/b1.js
+40 silly gunzTarPerm modified mode [ 'www/b1.js', 488, 492 ]
+41 silly gunzTarPerm extractEntry www/denodify.js
+42 silly gunzTarPerm modified mode [ 'www/denodify.js', 488, 492 ]
+43 silly gunzTarPerm extractEntry www/apple-touch-icon.png
+44 silly gunzTarPerm modified mode [ 'www/apple-touch-icon.png', 488, 492 ]
+45 silly gunzTarPerm extractEntry www/apple-touch-icon-114x114-precomposed.png
+46 silly gunzTarPerm modified mode [ 'www/apple-touch-icon-114x114-precomposed.png', 488, 492 ]
+47 silly gunzTarPerm extractEntry www/apple-touch-icon-144x144-precomposed.png
+48 silly gunzTarPerm modified mode [ 'www/apple-touch-icon-144x144-precomposed.png', 488, 492 ]
+49 silly gunzTarPerm extractEntry www/apple-touch-icon-57x57-precomposed.png
+50 silly gunzTarPerm modified mode [ 'www/apple-touch-icon-57x57-precomposed.png', 488, 492 ]
+51 silly gunzTarPerm extractEntry www/apple-touch-icon-72x72-precomposed.png
+52 silly gunzTarPerm modified mode [ 'www/apple-touch-icon-72x72-precomposed.png', 488, 492 ]
+53 silly gunzTarPerm extractEntry www/apple-touch-icon-precomposed.png
+54 silly gunzTarPerm modified mode [ 'www/apple-touch-icon-precomposed.png', 488, 492 ]
+55 silly gunzTarPerm extractEntry www/404.html
+56 silly gunzTarPerm modified mode [ 'www/404.html', 488, 492 ]
+57 silly gunzTarPerm extractEntry www/css/main.css
+58 silly gunzTarPerm modified mode [ 'www/css/main.css', 488, 492 ]
+59 silly gunzTarPerm extractEntry www/css/vendor/font-awesome-ie7.min.css
+60 silly gunzTarPerm modified mode [ 'www/css/vendor/font-awesome-ie7.min.css', 488, 492 ]
+61 silly gunzTarPerm extractEntry www/css/vendor/angular-ui.css
+62 silly gunzTarPerm modified mode [ 'www/css/vendor/angular-ui.css', 488, 492 ]
+63 silly gunzTarPerm extractEntry www/css/vendor/bootstrap-responsive.css
+64 silly gunzTarPerm modified mode [ 'www/css/vendor/bootstrap-responsive.css', 488, 492 ]
+65 silly gunzTarPerm extractEntry www/css/vendor/bootstrap.css
+66 silly gunzTarPerm modified mode [ 'www/css/vendor/bootstrap.css', 488, 492 ]
+67 silly gunzTarPerm extractEntry www/css/vendor/check_radio_sheet.png
+68 silly gunzTarPerm modified mode [ 'www/css/vendor/check_radio_sheet.png', 488, 492 ]
+69 silly gunzTarPerm extractEntry www/css/vendor/checkboxes.css
+70 silly gunzTarPerm modified mode [ 'www/css/vendor/checkboxes.css', 488, 492 ]
+71 silly gunzTarPerm extractEntry www/css/vendor/bg/purty_wood.png
+72 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/purty_wood.png', 488, 492 ]
+73 silly gunzTarPerm extractEntry www/css/vendor/bg/brushed_alu.png
+74 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/brushed_alu.png', 488, 492 ]
+75 silly gunzTarPerm extractEntry www/css/vendor/bg/dark_wall.png
+76 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/dark_wall.png', 488, 492 ]
+77 silly gunzTarPerm extractEntry www/css/vendor/bg/darkdenim3.png
+78 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/darkdenim3.png', 488, 492 ]
+79 silly gunzTarPerm extractEntry www/css/vendor/bg/diamond_upholstery.png
+80 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/diamond_upholstery.png', 488, 492 ]
+81 silly gunzTarPerm extractEntry www/css/vendor/bg/egg_shell.png
+82 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/egg_shell.png', 488, 492 ]
+83 silly gunzTarPerm extractEntry www/css/vendor/bg/light_toast.png
+84 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/light_toast.png', 488, 492 ]
+85 silly gunzTarPerm extractEntry www/css/vendor/bg/noise.png
+86 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/noise.png', 488, 492 ]
+87 silly gunzTarPerm extractEntry www/css/vendor/bg/noise_pattern_with_crosslines.png
+88 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/noise_pattern_with_crosslines.png',
+88 silly gunzTarPerm   488,
+88 silly gunzTarPerm   492 ]
+89 silly gunzTarPerm extractEntry www/css/vendor/bg/crisp_paper_ruffles.png
+90 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/crisp_paper_ruffles.png', 488, 492 ]
+91 silly gunzTarPerm extractEntry www/css/vendor/bg/retina_dust.png
+92 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/retina_dust.png', 488, 492 ]
+93 silly gunzTarPerm extractEntry www/css/vendor/bg/scribble_light.png
+94 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/scribble_light.png', 488, 492 ]
+95 silly gunzTarPerm extractEntry www/css/vendor/bg/subtle_stripes.png
+96 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/subtle_stripes.png', 488, 492 ]
+97 silly gunzTarPerm extractEntry www/css/vendor/bg/textured_stripes.png
+98 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/textured_stripes.png', 488, 492 ]
+99 silly gunzTarPerm extractEntry www/css/vendor/bg/tileable_wood_texture.png
+100 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/tileable_wood_texture.png', 488, 492 ]
+101 silly gunzTarPerm extractEntry www/css/vendor/bg/vertical_cloth.png
+102 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/vertical_cloth.png', 488, 492 ]
+103 silly gunzTarPerm extractEntry www/css/vendor/bg/vichy.png
+104 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/vichy.png', 488, 492 ]
+105 silly gunzTarPerm extractEntry www/css/vendor/bg/washi.png
+106 silly gunzTarPerm modified mode [ 'www/css/vendor/bg/washi.png', 488, 492 ]
+107 silly gunzTarPerm extractEntry www/css/vendor/font-awesome.css
+108 silly gunzTarPerm modified mode [ 'www/css/vendor/font-awesome.css', 488, 492 ]
+109 silly gunzTarPerm extractEntry www/css/vendor/h5bp.css
+110 silly gunzTarPerm modified mode [ 'www/css/vendor/h5bp.css', 488, 492 ]
+111 silly gunzTarPerm extractEntry www/css/vendor/images/ui-bg_glass_75_dadada_1x400.png
+112 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-bg_glass_75_dadada_1x400.png',
+112 silly gunzTarPerm   488,
+112 silly gunzTarPerm   492 ]
+113 silly gunzTarPerm extractEntry www/css/vendor/images/animated-overlay.gif
+114 silly gunzTarPerm modified mode [ 'www/css/vendor/images/animated-overlay.gif', 488, 492 ]
+115 silly gunzTarPerm extractEntry www/css/vendor/images/next-horizontal.png
+116 silly gunzTarPerm modified mode [ 'www/css/vendor/images/next-horizontal.png', 488, 492 ]
+117 silly gunzTarPerm extractEntry www/css/vendor/images/prev-horizontal.png
+118 silly gunzTarPerm modified mode [ 'www/css/vendor/images/prev-horizontal.png', 488, 492 ]
+119 silly gunzTarPerm extractEntry www/css/vendor/images/ui-bg_flat_0_aaaaaa_40x100.png
+120 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-bg_flat_0_aaaaaa_40x100.png',
+120 silly gunzTarPerm   488,
+120 silly gunzTarPerm   492 ]
+121 silly gunzTarPerm extractEntry www/css/vendor/images/ui-bg_flat_75_ffffff_40x100.png
+122 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-bg_flat_75_ffffff_40x100.png',
+122 silly gunzTarPerm   488,
+122 silly gunzTarPerm   492 ]
+123 silly gunzTarPerm extractEntry www/css/vendor/images/ui-bg_glass_55_fbf9ee_1x400.png
+124 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-bg_glass_55_fbf9ee_1x400.png',
+124 silly gunzTarPerm   488,
+124 silly gunzTarPerm   492 ]
+125 silly gunzTarPerm extractEntry www/css/vendor/images/ui-bg_glass_65_ffffff_1x400.png
+126 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-bg_glass_65_ffffff_1x400.png',
+126 silly gunzTarPerm   488,
+126 silly gunzTarPerm   492 ]
+127 silly gunzTarPerm extractEntry www/css/vendor/images/bg_direction_nav.png
+128 silly gunzTarPerm modified mode [ 'www/css/vendor/images/bg_direction_nav.png', 488, 492 ]
+129 silly gunzTarPerm extractEntry www/css/vendor/images/ui-bg_glass_75_e6e6e6_1x400.png
+130 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-bg_glass_75_e6e6e6_1x400.png',
+130 silly gunzTarPerm   488,
+130 silly gunzTarPerm   492 ]
+131 silly gunzTarPerm extractEntry www/css/vendor/images/ui-bg_glass_95_fef1ec_1x400.png
+132 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-bg_glass_95_fef1ec_1x400.png',
+132 silly gunzTarPerm   488,
+132 silly gunzTarPerm   492 ]
+133 silly gunzTarPerm extractEntry www/css/vendor/images/ui-bg_highlight-soft_75_cccccc_1x100.png
+134 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-bg_highlight-soft_75_cccccc_1x100.png',
+134 silly gunzTarPerm   488,
+134 silly gunzTarPerm   492 ]
+135 silly gunzTarPerm extractEntry www/css/vendor/images/ui-icons_222222_256x240.png
+136 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-icons_222222_256x240.png', 488, 492 ]
+137 silly gunzTarPerm extractEntry www/css/vendor/images/ui-icons_2e83ff_256x240.png
+138 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-icons_2e83ff_256x240.png', 488, 492 ]
+139 silly gunzTarPerm extractEntry www/css/vendor/images/ui-icons_454545_256x240.png
+140 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-icons_454545_256x240.png', 488, 492 ]
+141 silly gunzTarPerm extractEntry www/css/vendor/images/ui-icons_888888_256x240.png
+142 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-icons_888888_256x240.png', 488, 492 ]
+143 silly gunzTarPerm extractEntry www/css/vendor/images/ui-icons_cd0a0a_256x240.png
+144 silly gunzTarPerm modified mode [ 'www/css/vendor/images/ui-icons_cd0a0a_256x240.png', 488, 492 ]
+145 silly gunzTarPerm extractEntry www/css/vendor/jquery-ui-1.10.2.custom.css
+146 silly gunzTarPerm modified mode [ 'www/css/vendor/jquery-ui-1.10.2.custom.css', 488, 492 ]
+147 silly gunzTarPerm extractEntry www/css/vendor/normalize.css
+148 silly gunzTarPerm modified mode [ 'www/css/vendor/normalize.css', 488, 492 ]
+149 silly gunzTarPerm extractEntry www/css/vendor/persona-buttons.css
+150 silly gunzTarPerm modified mode [ 'www/css/vendor/persona-buttons.css', 488, 492 ]
+151 silly gunzTarPerm extractEntry www/a,x
+152 silly gunzTarPerm modified mode [ 'www/a,x', 488, 492 ]
+153 silly gunzTarPerm extractEntry www/humans.txt
+154 silly gunzTarPerm modified mode [ 'www/humans.txt', 488, 492 ]
+155 silly gunzTarPerm extractEntry www/index.html
+156 silly gunzTarPerm modified mode [ 'www/index.html', 488, 492 ]
+157 silly gunzTarPerm extractEntry www/robots.txt
+158 silly gunzTarPerm modified mode [ 'www/robots.txt', 488, 492 ]
+159 silly gunzTarPerm extractEntry www/scripts/angular.js
+160 silly gunzTarPerm modified mode [ 'www/scripts/angular.js', 488, 492 ]
+161 silly gunzTarPerm extractEntry www/scripts/c.js
+162 silly gunzTarPerm modified mode [ 'www/scripts/c.js', 488, 492 ]
+163 silly gunzTarPerm extractEntry www/scripts/denodify.js
+164 silly gunzTarPerm modified mode [ 'www/scripts/denodify.js', 488, 492 ]
+165 silly gunzTarPerm extractEntry www/scripts/denodifyold.js
+166 silly gunzTarPerm modified mode [ 'www/scripts/denodifyold.js', 488, 492 ]
+167 silly gunzTarPerm extractEntry www/scripts/m3.js
+168 silly gunzTarPerm modified mode [ 'www/scripts/m3.js', 488, 492 ]
+169 silly gunzTarPerm extractEntry www/scripts/main.js
+170 silly gunzTarPerm modified mode [ 'www/scripts/main.js', 488, 492 ]
+171 silly gunzTarPerm extractEntry www/scripts/b1.js
+172 silly gunzTarPerm modified mode [ 'www/scripts/b1.js', 488, 492 ]
+173 silly gunzTarPerm extractEntry www/scripts/myblock.js
+174 silly gunzTarPerm modified mode [ 'www/scripts/myblock.js', 488, 492 ]
+175 silly gunzTarPerm extractEntry www/scripts/qdn.js
+176 silly gunzTarPerm modified mode [ 'www/scripts/qdn.js', 488, 492 ]
+177 silly gunzTarPerm extractEntry www/scripts/qnd.js
+178 silly gunzTarPerm modified mode [ 'www/scripts/qnd.js', 488, 492 ]
+179 silly gunzTarPerm extractEntry www/scripts/myblock.bundle
+180 silly gunzTarPerm modified mode [ 'www/scripts/myblock.bundle', 488, 492 ]
+181 silly gunzTarPerm extractEntry www/scripts/vendor/angular-cookies.min.js
+182 silly gunzTarPerm modified mode [ 'www/scripts/vendor/angular-cookies.min.js', 488, 492 ]
+183 silly gunzTarPerm extractEntry www/scripts/vendor/bootstrap.js
+184 silly gunzTarPerm modified mode [ 'www/scripts/vendor/bootstrap.js', 488, 492 ]
+185 silly gunzTarPerm extractEntry www/scripts/vendor/cookie.js
+186 silly gunzTarPerm modified mode [ 'www/scripts/vendor/cookie.js', 488, 492 ]
+187 silly gunzTarPerm extractEntry www/scripts/vendor/couchapi.js
+188 silly gunzTarPerm modified mode [ 'www/scripts/vendor/couchapi.js', 488, 492 ]
+189 silly gunzTarPerm extractEntry www/scripts/vendor/angular.min.js
+190 silly gunzTarPerm modified mode [ 'www/scripts/vendor/angular.min.js', 488, 492 ]
+191 silly gunzTarPerm extractEntry www/scripts/vendor/jquery-1.6.2.js
+192 silly gunzTarPerm modified mode [ 'www/scripts/vendor/jquery-1.6.2.js', 488, 492 ]
+193 silly gunzTarPerm extractEntry www/scripts/vendor/jquery-1.6.4.min.js
+194 silly gunzTarPerm modified mode [ 'www/scripts/vendor/jquery-1.6.4.min.js', 488, 492 ]
+195 silly gunzTarPerm extractEntry www/scripts/vendor/jquery-1.7.2.min.js
+196 silly gunzTarPerm modified mode [ 'www/scripts/vendor/jquery-1.7.2.min.js', 488, 492 ]
+197 silly gunzTarPerm extractEntry www/scripts/vendor/jquery-1.8.3.min.js
+198 silly gunzTarPerm modified mode [ 'www/scripts/vendor/jquery-1.8.3.min.js', 488, 492 ]
+199 silly gunzTarPerm extractEntry www/scripts/vendor/jquery-1.9.1.min.js
+200 silly gunzTarPerm modified mode [ 'www/scripts/vendor/jquery-1.9.1.min.js', 488, 492 ]
+201 silly gunzTarPerm extractEntry www/scripts/vendor/angular-ui.js
+202 silly gunzTarPerm modified mode [ 'www/scripts/vendor/angular-ui.js', 488, 492 ]
+203 silly gunzTarPerm extractEntry www/scripts/vendor/jquery.easing.1.3.js
+204 silly gunzTarPerm modified mode [ 'www/scripts/vendor/jquery.easing.1.3.js', 488, 492 ]
+205 silly gunzTarPerm extractEntry www/scripts/vendor/angular-ui-ieshiv.js
+206 silly gunzTarPerm modified mode [ 'www/scripts/vendor/angular-ui-ieshiv.js', 488, 492 ]
+207 silly gunzTarPerm extractEntry www/scripts/vendor/modernizr.js
+208 silly gunzTarPerm modified mode [ 'www/scripts/vendor/modernizr.js', 488, 492 ]
+209 silly gunzTarPerm extractEntry www/scripts/vendor/angular-sanitize.min.js
+210 silly gunzTarPerm modified mode [ 'www/scripts/vendor/angular-sanitize.min.js', 488, 492 ]
+211 silly gunzTarPerm extractEntry www/scripts/vendor/noconsole.js
+212 silly gunzTarPerm modified mode [ 'www/scripts/vendor/noconsole.js', 488, 492 ]
+213 silly gunzTarPerm extractEntry www/scripts/vendor/angular-resource.min.js
+214 silly gunzTarPerm modified mode [ 'www/scripts/vendor/angular-resource.min.js', 488, 492 ]
+215 silly gunzTarPerm extractEntry www/scripts/vendor/ui-bootstrap-tpls-0.2.0.js
+216 silly gunzTarPerm modified mode [ 'www/scripts/vendor/ui-bootstrap-tpls-0.2.0.js', 488, 492 ]
+217 silly gunzTarPerm extractEntry www/scripts/vendor/angular-mobile.min.js
+218 silly gunzTarPerm modified mode [ 'www/scripts/vendor/angular-mobile.min.js', 488, 492 ]
+219 silly gunzTarPerm extractEntry www/scripts/vendor/vow.js
+220 silly gunzTarPerm modified mode [ 'www/scripts/vendor/vow.js', 488, 492 ]
+221 silly gunzTarPerm extractEntry www/scripts/vendor/jquery-1.10.1.min.js
+222 silly gunzTarPerm modified mode [ 'www/scripts/vendor/jquery-1.10.1.min.js', 488, 492 ]
+223 silly gunzTarPerm extractEntry www/scripts/test.coffee
+224 silly gunzTarPerm modified mode [ 'www/scripts/test.coffee', 488, 492 ]
+225 silly gunzTarPerm extractEntry www/scripts/test_concat/a.js
+226 silly gunzTarPerm modified mode [ 'www/scripts/test_concat/a.js', 488, 492 ]
+227 silly gunzTarPerm extractEntry www/scripts/test_concat/b.js
+228 silly gunzTarPerm modified mode [ 'www/scripts/test_concat/b.js', 488, 492 ]
+229 silly gunzTarPerm extractEntry www/scripts/test_concat/c.js
+230 silly gunzTarPerm modified mode [ 'www/scripts/test_concat/c.js', 488, 492 ]
+231 silly gunzTarPerm extractEntry www/scripts/test_concat/myblock.js
+232 silly gunzTarPerm modified mode [ 'www/scripts/test_concat/myblock.js', 488, 492 ]
+233 silly gunzTarPerm extractEntry www/scripts/test_concat/b.coffee
+234 silly gunzTarPerm modified mode [ 'www/scripts/test_concat/b.coffee', 488, 492 ]
+235 silly gunzTarPerm extractEntry www/scripts/test_concat/mixedBlock.bundle
+236 silly gunzTarPerm modified mode [ 'www/scripts/test_concat/mixedBlock.bundle', 488, 492 ]
+237 silly gunzTarPerm extractEntry www/scripts/test_concat/modules/m1.js
+238 silly gunzTarPerm modified mode [ 'www/scripts/test_concat/modules/m1.js', 488, 492 ]
+239 silly gunzTarPerm extractEntry www/scripts/modules/cachejs.js
+240 silly gunzTarPerm modified mode [ 'www/scripts/modules/cachejs.js', 488, 492 ]
+241 silly gunzTarPerm extractEntry www/scripts/modules/cachejs2.js
+242 silly gunzTarPerm modified mode [ 'www/scripts/modules/cachejs2.js', 488, 492 ]
+243 silly gunzTarPerm extractEntry www/scripts/modules/m2.js
+244 silly gunzTarPerm modified mode [ 'www/scripts/modules/m2.js', 488, 492 ]
+245 silly gunzTarPerm extractEntry www/scripts/modules/m4.js
+246 silly gunzTarPerm modified mode [ 'www/scripts/modules/m4.js', 488, 492 ]
+247 silly gunzTarPerm extractEntry www/scripts/modules/mymodule.js
+248 silly gunzTarPerm modified mode [ 'www/scripts/modules/mymodule.js', 488, 492 ]
+249 silly gunzTarPerm extractEntry www/scripts/modules/r1.js
+250 silly gunzTarPerm modified mode [ 'www/scripts/modules/r1.js', 488, 492 ]
+251 silly gunzTarPerm extractEntry www/scripts/modules/r2.js
+252 silly gunzTarPerm modified mode [ 'www/scripts/modules/r2.js', 488, 492 ]
+253 silly gunzTarPerm extractEntry www/scripts/modules/r3.js
+254 silly gunzTarPerm modified mode [ 'www/scripts/modules/r3.js', 488, 492 ]
+255 silly gunzTarPerm extractEntry www/scripts/modules/r4.js
+256 silly gunzTarPerm modified mode [ 'www/scripts/modules/r4.js', 488, 492 ]
+257 silly gunzTarPerm extractEntry bower.json
+258 silly gunzTarPerm modified mode [ 'bower.json', 488, 492 ]
+259 silly gunzTarPerm extractEntry build/recipe.js
+260 silly gunzTarPerm modified mode [ 'build/recipe.js', 488, 492 ]
+261 silly gunzTarPerm extractEntry build/html/basicAngularPage.html
+262 silly gunzTarPerm modified mode [ 'build/html/basicAngularPage.html', 488, 492 ]
+263 silly gunzTarPerm extractEntry build/html/body.html
+264 silly gunzTarPerm modified mode [ 'build/html/body.html', 488, 492 ]
+265 silly gunzTarPerm extractEntry build/html/chat.html
+266 silly gunzTarPerm modified mode [ 'build/html/chat.html', 488, 492 ]
+267 silly gunzTarPerm extractEntry build/html/google_analytics.html
+268 silly gunzTarPerm modified mode [ 'build/html/google_analytics.html', 488, 492 ]
+269 silly gunzTarPerm extractEntry build/html/ieshim.html
+270 silly gunzTarPerm modified mode [ 'build/html/ieshim.html', 488, 492 ]
+271 silly gunzTarPerm extractEntry certs/certificate.pem
+272 silly gunzTarPerm modified mode [ 'certs/certificate.pem', 488, 492 ]
+273 silly gunzTarPerm extractEntry certs/privatekey.pem
+274 silly gunzTarPerm modified mode [ 'certs/privatekey.pem', 488, 492 ]
+275 silly gunzTarPerm extractEntry core_modules/_shims.js
+276 silly gunzTarPerm modified mode [ 'core_modules/_shims.js', 488, 492 ]
+277 silly gunzTarPerm extractEntry core_modules/path.js
+278 silly gunzTarPerm modified mode [ 'core_modules/path.js', 488, 492 ]
+279 silly gunzTarPerm extractEntry core_modules/url.js
+280 silly gunzTarPerm modified mode [ 'core_modules/url.js', 488, 492 ]
+281 silly gunzTarPerm extractEntry core_modules/util.js
+282 silly gunzTarPerm modified mode [ 'core_modules/util.js', 488, 492 ]
+283 silly gunzTarPerm extractEntry .project/README.md
+284 silly gunzTarPerm modified mode [ '.project/README.md', 488, 492 ]
+285 silly gunzTarPerm extractEntry .project/bower.js
+286 silly gunzTarPerm modified mode [ '.project/bower.js', 488, 492 ]
+287 silly gunzTarPerm extractEntry .project/package.js
+288 silly gunzTarPerm modified mode [ '.project/package.js', 488, 492 ]
+289 silly gunzTarPerm extractEntry docs/custom.css
+290 silly gunzTarPerm modified mode [ 'docs/custom.css', 488, 492 ]
+291 silly gunzTarPerm extractEntry docs/denodify-helper.html
+292 silly gunzTarPerm modified mode [ 'docs/denodify-helper.html', 488, 492 ]
+293 silly gunzTarPerm extractEntry docs/denodify.html
+294 silly gunzTarPerm modified mode [ 'docs/denodify.html', 488, 492 ]
+295 silly gunzTarPerm extractEntry docs/docco.css
+296 silly gunzTarPerm modified mode [ 'docs/docco.css', 488, 492 ]
+297 silly gunzTarPerm extractEntry docs/public/fonts/aller-bold.eot
+298 silly gunzTarPerm modified mode [ 'docs/public/fonts/aller-bold.eot', 488, 492 ]
+299 silly gunzTarPerm extractEntry docs/public/fonts/aller-bold.ttf
+300 silly gunzTarPerm modified mode [ 'docs/public/fonts/aller-bold.ttf', 488, 492 ]
+301 silly gunzTarPerm extractEntry docs/public/fonts/aller-bold.woff
+302 silly gunzTarPerm modified mode [ 'docs/public/fonts/aller-bold.woff', 488, 492 ]
+303 silly gunzTarPerm extractEntry docs/public/fonts/aller-light.eot
+304 silly gunzTarPerm modified mode [ 'docs/public/fonts/aller-light.eot', 488, 492 ]
+305 silly gunzTarPerm extractEntry docs/public/fonts/aller-light.ttf
+306 silly gunzTarPerm modified mode [ 'docs/public/fonts/aller-light.ttf', 488, 492 ]
+307 silly gunzTarPerm extractEntry docs/public/fonts/aller-light.woff
+308 silly gunzTarPerm modified mode [ 'docs/public/fonts/aller-light.woff', 488, 492 ]
+309 silly gunzTarPerm extractEntry docs/public/fonts/novecento-bold.eot
+310 silly gunzTarPerm modified mode [ 'docs/public/fonts/novecento-bold.eot', 488, 492 ]
+311 silly gunzTarPerm extractEntry docs/public/fonts/novecento-bold.ttf
+312 silly gunzTarPerm modified mode [ 'docs/public/fonts/novecento-bold.ttf', 488, 492 ]
+313 silly gunzTarPerm extractEntry docs/public/fonts/novecento-bold.woff
+314 silly gunzTarPerm modified mode [ 'docs/public/fonts/novecento-bold.woff', 488, 492 ]
+315 silly gunzTarPerm extractEntry docs/public/stylesheets/normalize.css
+316 silly gunzTarPerm modified mode [ 'docs/public/stylesheets/normalize.css', 488, 492 ]
+317 silly gunzTarPerm extractEntry init
+318 silly gunzTarPerm modified mode [ 'init', 488, 492 ]
+319 silly gunzTarPerm extractEntry test/m1.js
+320 silly gunzTarPerm modified mode [ 'test/m1.js', 488, 492 ]
+321 silly gunzTarPerm extractEntry test/m2.js
+322 silly gunzTarPerm modified mode [ 'test/m2.js', 488, 492 ]
+323 silly gunzTarPerm extractEntry test/m3.js
+324 silly gunzTarPerm modified mode [ 'test/m3.js', 488, 492 ]
+325 silly gunzTarPerm extractEntry test/mytest.js
+326 silly gunzTarPerm modified mode [ 'test/mytest.js', 488, 492 ]
+327 silly gunzTarPerm extractEntry test/qdn.js
+328 silly gunzTarPerm modified mode [ 'test/qdn.js', 488, 492 ]
+329 silly gunzTarPerm extractEntry test/test.js
+330 silly gunzTarPerm modified mode [ 'test/test.js', 488, 492 ]
+331 silly gunzTarPerm extractEntry test/scripts/denodify.js
+332 silly gunzTarPerm modified mode [ 'test/scripts/denodify.js', 488, 492 ]
+333 silly gunzTarPerm extractEntry test/test.coffee
+334 silly gunzTarPerm modified mode [ 'test/test.coffee', 488, 492 ]
+335 silly gunzTarPerm extractEntry bin/README
+336 silly gunzTarPerm modified mode [ 'bin/README', 488, 492 ]
+337 silly gunzTarPerm extractEntry bin/serve-nodemon
+338 silly gunzTarPerm modified mode [ 'bin/serve-nodemon', 488, 492 ]
+339 silly gunzTarPerm extractEntry bin/build
+340 silly gunzTarPerm modified mode [ 'bin/build', 488, 492 ]
+341 silly gunzTarPerm extractEntry bin/build-forever
+342 silly gunzTarPerm modified mode [ 'bin/build-forever', 488, 492 ]
+343 silly gunzTarPerm extractEntry bin/build-nodemon
+344 silly gunzTarPerm modified mode [ 'bin/build-nodemon', 488, 492 ]
+345 silly gunzTarPerm extractEntry bin/build-nodemon-connect
+346 silly gunzTarPerm modified mode [ 'bin/build-nodemon-connect', 488, 492 ]
+347 silly gunzTarPerm extractEntry bin/cape
+348 silly gunzTarPerm modified mode [ 'bin/cape', 488, 492 ]
+349 silly gunzTarPerm extractEntry bin/cape-nodemon
+350 silly gunzTarPerm modified mode [ 'bin/cape-nodemon', 488, 492 ]
+351 silly gunzTarPerm extractEntry bin/URL
+352 silly gunzTarPerm modified mode [ 'bin/URL', 488, 492 ]
+353 silly gunzTarPerm extractEntry bin/docs
+354 silly gunzTarPerm modified mode [ 'bin/docs', 488, 492 ]
+355 silly gunzTarPerm extractEntry bin/linode_sync.sh
+356 silly gunzTarPerm modified mode [ 'bin/linode_sync.sh', 488, 492 ]
+357 silly gunzTarPerm extractEntry bin/old/build-forever
+358 silly gunzTarPerm modified mode [ 'bin/old/build-forever', 488, 492 ]
+359 silly gunzTarPerm extractEntry bin/old/build-nodemon
+360 silly gunzTarPerm modified mode [ 'bin/old/build-nodemon', 488, 492 ]
+361 silly gunzTarPerm extractEntry bin/old/develop
+362 silly gunzTarPerm modified mode [ 'bin/old/develop', 488, 492 ]
+363 silly gunzTarPerm extractEntry bin/old/docs
+364 silly gunzTarPerm modified mode [ 'bin/old/docs', 488, 492 ]
+365 silly gunzTarPerm extractEntry bin/old/linode_sync.sh
+366 silly gunzTarPerm modified mode [ 'bin/old/linode_sync.sh', 488, 492 ]
+367 silly gunzTarPerm extractEntry bin/old/serve-forever
+368 silly gunzTarPerm modified mode [ 'bin/old/serve-forever', 488, 492 ]
+369 silly gunzTarPerm extractEntry bin/old/serve-nodemon
+370 silly gunzTarPerm modified mode [ 'bin/old/serve-nodemon', 488, 492 ]
+371 silly gunzTarPerm extractEntry bin/refresh/refresh-inotify
+372 silly gunzTarPerm modified mode [ 'bin/refresh/refresh-inotify', 488, 492 ]
+373 silly gunzTarPerm extractEntry bin/refresh/refresh-xdotool
+374 silly gunzTarPerm modified mode [ 'bin/refresh/refresh-xdotool', 488, 492 ]
+375 silly gunzTarPerm extractEntry bin/refresh/refresh-xvkbd
+376 silly gunzTarPerm modified mode [ 'bin/refresh/refresh-xvkbd', 488, 492 ]
+377 silly gunzTarPerm extractEntry bin/serve
+378 silly gunzTarPerm modified mode [ 'bin/serve', 488, 492 ]
+379 silly gunzTarPerm extractEntry bin/serve-forever
+380 silly gunzTarPerm modified mode [ 'bin/serve-forever', 488, 492 ]
+381 silly gunzTarPerm extractEntry bin/clearCache.sh
+382 silly gunzTarPerm modified mode [ 'bin/clearCache.sh', 488, 492 ]
+383 silly gunzTarPerm extractEntry bin.old/build
+384 silly gunzTarPerm modified mode [ 'bin.old/build', 488, 492 ]
+385 silly gunzTarPerm extractEntry bin.old/build-forever
+386 silly gunzTarPerm modified mode [ 'bin.old/build-forever', 488, 492 ]
+387 silly gunzTarPerm extractEntry bin.old/build-monitor
+388 silly gunzTarPerm modified mode [ 'bin.old/build-monitor', 488, 492 ]
+389 silly gunzTarPerm extractEntry bin.old/build-nodemon
+390 silly gunzTarPerm modified mode [ 'bin.old/build-nodemon', 488, 492 ]
+391 silly gunzTarPerm extractEntry bin.old/develop
+392 silly gunzTarPerm modified mode [ 'bin.old/develop', 488, 492 ]
+393 silly gunzTarPerm extractEntry bin.old/docs
+394 silly gunzTarPerm modified mode [ 'bin.old/docs', 488, 492 ]
+395 silly gunzTarPerm extractEntry bin.old/linode_sync.sh
+396 silly gunzTarPerm modified mode [ 'bin.old/linode_sync.sh', 488, 492 ]
+397 silly gunzTarPerm extractEntry bin.old/serve-forever
+398 silly gunzTarPerm modified mode [ 'bin.old/serve-forever', 488, 492 ]
+399 silly gunzTarPerm extractEntry server/server.js
+400 silly gunzTarPerm modified mode [ 'server/server.js', 488, 492 ]
+401 silly gunzTarPerm extractEntry src/denodify-browser.js
+402 silly gunzTarPerm modified mode [ 'src/denodify-browser.js', 488, 492 ]
+403 silly gunzTarPerm extractEntry src/denodify.js
+404 silly gunzTarPerm modified mode [ 'src/denodify.js', 488, 492 ]
+405 silly gunzTarPerm extractEntry src/expand.js
+406 silly gunzTarPerm modified mode [ 'src/expand.js', 488, 492 ]
+407 silly gunzTarPerm extractEntry src/make-script.js
+408 silly gunzTarPerm modified mode [ 'src/make-script.js', 488, 492 ]
+409 silly gunzTarPerm extractEntry src/required.js
+410 silly gunzTarPerm modified mode [ 'src/required.js', 488, 492 ]
+411 silly gunzTarPerm extractEntry src/resolve.js
+412 silly gunzTarPerm modified mode [ 'src/resolve.js', 488, 492 ]
+413 silly gunzTarPerm extractEntry denodify.org
+414 silly gunzTarPerm modified mode [ 'denodify.org', 488, 492 ]
+415 silly lockFile 3722f712-oris-npm-denodify-0-1-17-package tar:///home/michieljoris/.npm/denodify/0.1.17/package
+416 silly lockFile 3722f712-oris-npm-denodify-0-1-17-package tar:///home/michieljoris/.npm/denodify/0.1.17/package
+417 silly lockFile 80c62663-7918-0-15388305159285665-tmp-tgz tar:///home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz
+418 silly lockFile 80c62663-7918-0-15388305159285665-tmp-tgz tar:///home/michieljoris/tmp/npm-24985-x-5Qs80Z/1416881777918-0.15388305159285665/tmp.tgz
+419 silly lockFile 3a52ce78- .
+420 silly lockFile 3a52ce78- .
+421 silly publish { name: 'denodify',
+421 silly publish   description: 'Use nodejs modules in the browser. Used with bb-server and html-builder',
+421 silly publish   homepage: 'https://github.com/michieljoris/denodify',
+421 silly publish   keywords:
+421 silly publish    [ 'denodify',
+421 silly publish      'dependency',
+421 silly publish      'detective',
+421 silly publish      'require',
+421 silly publish      'module',
+421 silly publish      'resolver' ],
+421 silly publish   repository:
+421 silly publish    { type: 'git',
+421 silly publish      url: 'https://github.com/michieljoris/denodify.git' },
+421 silly publish   author:
+421 silly publish    { name: 'Michiel van Oosten',
+421 silly publish      email: 'mail@axion5.net',
+421 silly publish      url: 'http://www.axion5.net/' },
+421 silly publish   licenses:
+421 silly publish    [ { type: 'MIT',
+421 silly publish        url: 'http://github.com/michieljoris/denodify/blob/master/LICENSE.txt' } ],
+421 silly publish   main: 'src/denodify',
+421 silly publish   engines: { node: '>= 0.6.x' },
+421 silly publish   dependencies:
+421 silly publish    { dougs_vow: '*',
+421 silly publish      'fs-extra': '0.8.x',
+421 silly publish      required: '1.0.x',
+421 silly publish      deputy: '0.0.x',
+421 silly publish      detective: '3.1.x',
+421 silly publish      colors: '*' },
+421 silly publish   devDependencies:
+421 silly publish    { 'bb-server': 'git://github.com/michieljoris/bb-server.git',
+421 silly publish      'html-builder': 'git://github.com/michieljoris/html-builder.git',
+421 silly publish      docco: '*' },
+421 silly publish   private: false,
+421 silly publish   scripts: { docs: 'node node_modules/.bin/docco src/denodify.js' },
+421 silly publish   version: '0.1.17',
+421 silly publish   readme: 'denodify\n--------\n\nWorking, but needs testing...\n\nOrganize javascript on the browser using the nodejs module system.\n\nMuch simpler version than browserify, modules don\'t get bundled for instance,\nnor is there any plugin system browserifying all and sundry. \n\n#### Install:\n\n    npm install denodify\n\t\nTo see the thing in action clone this repo.\t\n\nFirst, for the coffeescript example make sure you have the coffee executable installed, eg:\n\n    sudo apt-get install coffeescript\n\t\nThen:\n\n\tnpm install\n\t\nThis will also install a demo server. Run\n\n\tbin/serve\n\t\nand open devtools to see denodify in action.\n\n\n### Use:\n\nAdd `src/denodify.js` to your sites javascript directory and load the file on\nyour web page.\n\nWrap your javascript:\n\n    denodify(\'my_module_id\',function(require, module, exports, __filename, __dirname, process) {"\n\t\trequire(\'another_module\');\n        [more source code]\n\t    module.exports = { bla: 123 }\n    })\n\t\nLoad your module and its dependencies with:\n\n    var exported = denodify.require(\'my_module_id); // { bla: 123 }\n\t\nThe order in which you load your nodejs modules doesn\'t matter as long as they\nare all loaded by the time you make your denodify.require call.\n\nIf you identify modules by their path from the server\'s root directory, and\nstart paths with a slash, you can require files within the same directory with\nrelative paths, just as in nodejs.\n\nYou can already do `require(\'path\')` since I use it to resolve paths in\ndenodify.\n\nI will add more standard nodejs modules as I see a need for them, url for\ninstance\n\nYou should be able to add any nodejs module as long as it doesn\'t use any\nspecific server side technology, such as file io for instance.\n\nI use this with [html-builder](http://github.com/Michieljoris/html-builder) and\n[bb-server](http://github.com/Michieljoris/bb-server). I can add a module and\nthe proper script tags for all dependencies get inserted and the source gets\nautomatically wrapped with the proper modules ids. This should even work if I\nwrite a module in a language other than javascript but supported by\nbb-server. The combination of denodify with the server and builder in effect\nachieves the same goal as all the browserify plugins, however for development\npurposes the files don\'t need to get bundled and then source mapped since they\ncan stay separate. Bb-server automatically concatenates (and minifies and gzips\nand caches) all source files and modules (including ones that need to be\ntranspiled) in production mode.\n\n`src/denodify-helper` is a nodejs file that provides some functions to wrap\nsource code and to get a list of dependencies for a given module file. It\nreturns the list ordered by dependency resolution (superfluous) and gives a\nwarning when it detects a circular dependency. If modules relied directly on\neach other the order would matter, but a loaded file only registers its source\ncode and that can happen in any order as long as it happens before the\ndenodify.require call.\n\nAdd denodify-helper to your module:\n\n    var denodify = require(\'denodify\');\n\n\nThis is a very simple, but quite effective system, much better and easier than\nthe old script injecting libraries like require.js or my own\n[bootstrapjs](http://github.com/Michieljoris/bootstrapjs). And you get nodejs\nmodule compatibility for free.\n\nSee also [denodefiy documentation](https://rawgithub.com/Michieljoris/denodify/master/docs/denodify.html).\nand [denodefiy-helper documentation](https://rawgithub.com/Michieljoris/denodify/master/docs/denodify-helper.html).\n\nTODO:\n* write tests\n* Add standard nodejs modules such as url (see browserify)\n* Implement use of deputy for caching detective investigations\n\n',
+421 silly publish   readmeFilename: 'README.md',
+421 silly publish   bugs: { url: 'https://github.com/michieljoris/denodify/issues' },
+421 silly publish   _id: 'denodify@0.1.17',
+421 silly publish   _shasum: '5d7aee85e9e75f76b2d11dec2cd3501160397b1b',
+421 silly publish   _from: '.' }
+422 error need auth auth and email required for publishing
+422 error need auth You need to authorize this machine using `npm adduser`
+423 error System Linux 3.13.0-32-generic
+424 error command "/home/michieljoris/bin/node" "/home/michieljoris/bin/npm" "publish"
+425 error cwd /media/michieljoris/d5099508-7d17-4aea-ac80-ac38100b9447/mysrc/javascript/denodify
+426 error node -v v0.10.28
+427 error npm -v 1.4.9
+428 error code ENEEDAUTH
+429 verbose exit [ 1, true ]
